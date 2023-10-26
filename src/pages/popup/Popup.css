@@ -1,0 +1,90 @@
+.App {
+  position: relative;
+  /* Change from absolute to relative */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 10px;
+  padding-top: 40px;
+  /* Add some padding at the top to prevent cut-off */
+  background-color: #282c34;
+  color: white;
+}
+
+.App-logo {
+  height: 30vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  min-height: 20%;
+  /* Changed from height: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 10px;
+  /* Added padding here instead of .App */
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  /* Adjusted to auto so content defines the height */
+  max-height: 100%;
+  /* Ensure it doesn’t exceed parent container */
+  overflow-y: auto;
+  /* Scrollable if content overflows */
+  width: 100%;
+  color: white;
+}
+
+.content-box {
+  padding: 10px;
+  /* Add some padding around the text */
+  margin: 5px;
+  /* Give some margin for aesthetics */
+  overflow-y: auto;
+  /* Add a scrollbar if content overflows vertically */
+  max-height: 300px;
+  /* Define a maximum height for the content box */
+  text-align: justify;
+  /* Justify the text for better readability */
+  line-height: 1.5;
+  /* Increase line height for better legibility */
+  word-wrap: break-word;
+  /* Ensure long words don't overflow */
+  border: 1px solid #ccc;
+  /* Optional: A border for clarity */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  /* Optional: A subtle shadow for depth */
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
