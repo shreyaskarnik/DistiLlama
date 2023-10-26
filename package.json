@@ -43,7 +43,7 @@
     "@types/node": "20.8.9",
     "@types/react": "18.2.29",
     "@types/react-dom": "18.2.13",
-    "@types/ws": "^8.5.4",
+    "@types/ws": "^8.5.8",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "@vitejs/plugin-react": "2.2.0",
@@ -71,7 +71,7 @@
     "tslib": "^2.6.2",
     "typescript": "4.9.5",
     "vite": "3.2.7",
-    "ws": "8.13.0"
+    "ws": "8.14.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
