@@ -56,3 +56,20 @@ To generate the summary I am using the following approach:
 ## Demo
 
 ![Demo](./DistiLlama.gif)
+
+## TODOS
+
+* [ ] Make the summarization chain configurable
+* [ ] Make LLM model configurable
+* [ ] Save summary in local storage
+* [ ] Improve the UI (not an expert in this area but will try to learn)
+* [ ] Add TTS support
+* [ ] Check out performance with different tuned prompts
+* [ ] Extend to chat with the page (use embeddings and LLMs for RAG)
+* [ ] Use [transformers.js](https://github.com/xenova/transformers.js) for local in browser embeddings and [Voy](https://github.com/tantaraio/voy) for the storage similar to this [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
+
+## References and Inspiration
+
+* [LangChain](https://github.com/langchain-ai/langchainjs)
+* [Ollama](https://ollama.ai/)
+* [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
