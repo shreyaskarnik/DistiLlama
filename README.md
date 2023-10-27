@@ -73,3 +73,5 @@ To generate the summary I am using the following approach:
 * [LangChain](https://github.com/langchain-ai/langchainjs)
 * [Ollama](https://ollama.ai/)
 * [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
+* [Chrome Extension Template](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
+* Art work generated using [DALL·E 3](https://openai.com/dall-e-3)
