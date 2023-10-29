@@ -8,7 +8,6 @@ const Models = ({ onModelChange }) => {
   const [models, setModels] = useState([]);
 
   useEffect(() => {
-    // Simulate fetching models. Replace this with your API call.
     const fetchModels = async () => {
       const fetchedModels = await getModels();
       setModels(fetchedModels);
