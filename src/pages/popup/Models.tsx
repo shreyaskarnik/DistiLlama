@@ -1,34 +1,27 @@
 {
   /* dropdown selection for choosing Models */
 }
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getModels } from './Summarize';
 /* eslint-disable react/prop-types */
-export default function ModelDropDown({ models, onModelChange }) {
-  const [modelList, setModelList] = useState([]);
+const Models = ({ onModelChange }) => {
+  const [models, setModels] = useState([]);
 
-  const handleChange = e => {
-    const selectedModel = e.target.value;
-    console.log('selectedModel: ', selectedModel);
-    onModelChange(selectedModel);
-  };
   useEffect(() => {
-    const fetchAndSetModels = async () => {
-      const fetchedModels = await models();
-      setModelList(fetchedModels);
-      // Set the default model to the first entry
-      if (fetchedModels && fetchedModels.length > 0) {
-        onModelChange(fetchedModels[0]);
-      }
+    const fetchModels = async () => {
+      const fetchedModels = await getModels();
+      setModels(fetchedModels);
+      onModelChange(fetchedModels[0]);
     };
 
-    fetchAndSetModels();
-  }, [models, onModelChange]);
+    fetchModels();
+  }, [onModelChange]);
+
   return (
     <div>
       <div>Select a Model:</div>
-      {/* also need to handle default case */}
-      <select onChange={handleChange} className="custom-select">
-        {modelList.map(model => (
+      <select className="custom-select" onChange={e => onModelChange(e.target.value)}>
+        {models.map(model => (
           <option key={model} value={model}>
             {model}
           </option>
@@ -36,4 +29,6 @@ export default function ModelDropDown({ models, onModelChange }) {
       </select>
     </div>
   );
-}
+};
+
+export default Models;
