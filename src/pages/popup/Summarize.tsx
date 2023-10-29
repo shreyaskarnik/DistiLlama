@@ -24,8 +24,8 @@ async function getModels() {
 }
 
 async function summarizeCurrentPage(selectedModel) {
+  console.log('Inside summarizeCurrentPage with model: ', selectedModel);
   try {
-    console.log('summarizing using model: ', selectedModel);
     const pageContent = await getPageContent();
 
     if (!pageContent) return;
