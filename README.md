@@ -6,7 +6,7 @@
 
 DistiLlama is a Chrome extension that leverages locally running LLM to generate a summary of the web page you are currently viewing.
 
-One of the things that I was experimenting with is how to use a locally running LLM instance for various tasks and summarization (tl;dr) was on the top of my list.
+One of the things that I was experimenting with is how to use a locally running LLM instance for various tasks and summarization (tl;dr) was on the top of my list. It was key to have all calls to LLM be local.
 
 This project utilizes [Ollama](https://ollama.ai/) as the locally running LLM instance. Ollama is a great project that is easy to setup and use. I highly recommend checking it out.
 
