@@ -12,8 +12,8 @@ dependencies:
     specifier: ^3.1.0
     version: 3.1.0
   langchain:
-    specifier: ^0.0.172
-    version: 0.0.172(@mozilla/readability@0.4.4)
+    specifier: ^0.0.175
+    version: 0.0.175(@mozilla/readability@0.4.4)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -4776,8 +4776,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /langchain@0.0.172(@mozilla/readability@0.4.4):
-    resolution: {integrity: sha512-HsUpAJmR3UPWmjuDckItddRPor5gViOQ3p+SgLMHJj4QR9igJi0YqE6g1x2iqSH6GH8ZP45dgP014xvK2vBsYA==}
+  /langchain@0.0.175(@mozilla/readability@0.4.4):
+    resolution: {integrity: sha512-WTe9I16FWFuO+1v2ePwK6Sa+jWpFz6aee2x8YH23JKX816cGrllejs/PMAjZqnifvA9xvS8PTK/y0MLKJZ2FUA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@aws-crypto/sha256-js': ^5.0.0
@@ -4827,13 +4827,14 @@ packages:
       apify-client: ^2.7.1
       assemblyai: ^2.0.2
       axios: '*'
-      cassandra-driver: ^4.6.4
+      cassandra-driver: ^4.7.2
       cheerio: ^1.0.0-rc.12
       chromadb: '*'
       closevector-common: 0.1.0-alpha.1
       closevector-node: 0.1.0-alpha.10
       closevector-web: 0.1.0-alpha.16
       cohere-ai: '>=6.0.0'
+      convex: ^1.3.1
       d3-dsv: ^2.0.0
       epub2: ^3.0.1
       faiss-node: ^0.5.1
@@ -4983,6 +4984,8 @@ packages:
       closevector-web:
         optional: true
       cohere-ai:
+        optional: true
+      convex:
         optional: true
       d3-dsv:
         optional: true

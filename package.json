@@ -26,7 +26,7 @@
   "dependencies": {
     "@mozilla/readability": "^0.4.4",
     "construct-style-sheets-polyfill": "^3.1.0",
-    "langchain": "^0.0.172",
+    "langchain": "^0.0.175",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
