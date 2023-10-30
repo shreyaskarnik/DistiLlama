@@ -4088,7 +4088,7 @@ json5@^1.0.2:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.2.1, json5@^2.2.3:
+json5@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
@@ -5321,7 +5321,7 @@ scheduler@^0.23.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
   integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
 
-semver@7.5.4, semver@7.x, semver@^7.3.4, semver@^7.5.3, semver@^7.5.4:
+semver@7.5.4, semver@^7.3.4, semver@^7.5.3, semver@^7.5.4:
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
   integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
@@ -5744,18 +5744,18 @@ ts-api-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-1.0.3.tgz#f12c1c781d04427313dbac808f453f050e54a331"
   integrity sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==
 
-ts-jest@29.0.2:
-  version "29.0.2"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.2.tgz#0c45a1ac45d14f8b3bf89bca9048a2840c7bd5ad"
-  integrity sha512-P03IUItnAjG6RkJXtjjD5pu0TryQFOwcb1YKmW63rO19V0UFqL3wiXZrmR5D7qYjI98btzIOAcYafLZ0GHAcQg==
+ts-jest@29.1.1:
+  version "29.1.1"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.1.1.tgz#f58fe62c63caf7bfcc5cc6472082f79180f0815b"
+  integrity sha512-D6xjnnbP17cC85nliwGiL+tpoKN0StpgE0TeOjXQTU6MVCfsB4v7aW05CgQ/1OywGb0x/oy9hHFnN+sczTiRaA==
   dependencies:
     bs-logger "0.x"
     fast-json-stable-stringify "2.x"
     jest-util "^29.0.0"
-    json5 "^2.2.1"
+    json5 "^2.2.3"
     lodash.memoize "4.x"
     make-error "1.x"
-    semver "7.x"
+    semver "^7.5.3"
     yargs-parser "^21.0.1"
 
 ts-loader@9.4.2:
