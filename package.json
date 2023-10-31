@@ -31,7 +31,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.7.2",
+    "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^17.7.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@testing-library/react": "13.4.0",
