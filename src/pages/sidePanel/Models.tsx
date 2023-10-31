@@ -2,7 +2,7 @@
   /* dropdown selection for choosing Models */
 }
 import { useEffect, useState } from 'react';
-import { getModels } from './Summarize';
+import { getModels } from '@src/pages/utils/processing';
 /* eslint-disable react/prop-types */
 const Models = ({ onModelChange }) => {
   const [models, setModels] = useState([]);
@@ -18,9 +18,9 @@ const Models = ({ onModelChange }) => {
   }, [onModelChange]);
 
   return (
-    <div>
-      <div>Select a Model:</div>
-      <select className="custom-select" onChange={e => onModelChange(e.target.value)}>
+    <div className="model-container">
+      <div className="model-select-label">Select a Model</div>
+      <select className="model-dropdown" onChange={e => onModelChange(e.target.value)}>
         {models.map(model => (
           <option key={model} value={model}>
             {model}

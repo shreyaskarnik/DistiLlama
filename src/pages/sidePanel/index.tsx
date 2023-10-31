@@ -1,13 +1,11 @@
-// this popup action loads the side panel
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '@pages/popup/index.css';
-import Popup from '@root/src/pages/popup/Popup';
+import Popup from '@root/src/pages/sidePanel/SidePanel';
 import refreshOnUpdate from 'virtual:reload-on-update-in-view';
 import { attachTwindStyle } from '@src/shared/style/twind';
 
-refreshOnUpdate('pages/popup');
+refreshOnUpdate('pages/sidePanel');
 
 function init() {
   const appContainer = document.querySelector('#app-container');

@@ -1,0 +1,39 @@
+/* Header.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #282c34;
+    /* Darker background for the header */
+    padding: 10px 15px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px 5px 0 0;
+    /* Adding a slight curve to the top edges */
+    color: #FFF;
+    /* White text */
+}
+
+.button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    /* Padding to increase touch area */
+    color: #FFF;
+    /* White color for icons */
+    opacity: 0.9;
+    /* Slightly reduced opacity for better visibility */
+    transition: opacity 0.2s;
+    /* Smooth transition for hover effect */
+}
+
+.button:hover {
+    opacity: 1;
+    /* Full opacity on hover */
+    color: #007BFF;
+}
+
+.button svg {
+    width: 24px;
+    height: 24px;
+}

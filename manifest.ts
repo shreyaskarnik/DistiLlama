@@ -8,14 +8,18 @@ const manifest: chrome.runtime.ManifestV3 = {
   name: 'DistiLlama',
   version: packageJson.version,
   description: packageJson.description,
-  permissions: ['storage'],
+  permissions: ['storage', 'sidePanel'],
   options_page: 'src/pages/options/index.html',
   background: {
     service_worker: 'src/pages/background/index.js',
     type: 'module',
   },
   action: {
-    default_popup: 'src/pages/popup/index.html',
+    default_title: 'Click to open panel',
+    
+  },
+  side_panel: {
+    default_path: 'src/pages/sidePanel/index.html',
     default_icon: 'icon-34.png',
   },
   icons: {
