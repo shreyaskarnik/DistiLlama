@@ -60,7 +60,7 @@ To generate the summary I am using the following approach:
 ## TODOS
 
 * [ ] Make the summarization chain configurable
-* [ ] Make LLM model configurable
+* [x] Make LLM model configurable
 * [ ] Save summary in local storage
 * [ ] Improve the UI (not an expert in this area but will try to learn)
 * [ ] Add TTS support
