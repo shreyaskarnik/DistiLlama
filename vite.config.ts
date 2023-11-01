@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path, { resolve } from 'path';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
 import makeManifest from './utils/plugins/make-manifest';
 import customDynamicImport from './utils/plugins/custom-dynamic-import';
 import addHmr from './utils/plugins/add-hmr';
@@ -35,6 +37,8 @@ export default defineConfig({
       isDev,
       contentScriptCssKey: regenerateCacheInvalidationKey(),
     }),
+    wasm(),
+    topLevelAwait(),
     customDynamicImport(),
     addHmr({ background: enableHmrInBackgroundScript, view: true }),
     watchRebuild(),
@@ -42,6 +46,7 @@ export default defineConfig({
   publicDir,
   build: {
     outDir,
+    target: ['chrome88', 'firefox85'],
     /** Can slowDown build speed. */
     // sourcemap: isDev,
     minify: isProduction,

@@ -7,12 +7,16 @@ import Header from '@root/src/pages/common/Header';
 import { getModels } from '@pages/utils/processing';
 import { TfiWrite } from 'react-icons/tfi';
 import { TbMessageQuestion } from 'react-icons/tb';
+import { embedDocs, talkToDocument } from '@root/src/pages/sidePanel/QandA';
+import QandABubble from './QandABubble';
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [embedding, setEmbedding] = useState(null);
+  const [vectorstore, setVectorStore] = useState(null);
   const fetchModels = async () => {
     const fetchedModels = await getModels();
     if (!selectedModel) {
@@ -22,13 +26,23 @@ const SidePanel = () => {
 
   useEffect(() => {
     fetchModels();
-  }, []); // This will run once when the component mounts
-  const handleClick = async () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const handleSummarizeAction = async () => {
     console.log('Model used for summary: ', selectedModel);
     setLoading(true);
     const response = await summarizeCurrentPage(selectedModel);
     setSummary(response);
     setLoading(false);
+  };
+  const handleQandAAction = async () => {
+    setEmbedding(true);
+    console.log('Model used for QandA: ', selectedModel);
+    const response = await embedDocs(selectedModel);
+    setVectorStore(response);
+    setEmbedding(false);
+    const chain = await talkToDocument(selectedModel, 'Summarize the document in bullet points', response);
+    console.log('Chain: ', chain);
   };
   return (
     <div className="App">
@@ -65,7 +79,7 @@ const SidePanel = () => {
             <div className="App-content">
               <div className="action">
                 <ModelDropDown onModelChange={setSelectedModel} />
-                <button className="real-button" onClick={handleClick}>
+                <button className="real-button" onClick={handleSummarizeAction}>
                   Summarize
                 </button>
               </div>
@@ -81,19 +95,23 @@ const SidePanel = () => {
             <Header
               onBack={() => setSelectedOption(null)}
               onRefresh={() => {
-                setSummary(null);
+                setEmbedding(false);
                 setSelectedOption(null);
+                setVectorStore(null);
               }}
             />
           </header>
-          <div className="App-content">
-            <div className="action">
-              <ModelDropDown onModelChange={setSelectedModel} />
-              <button className="real-button" onClick={handleClick}>
-                Load current document
-              </button>
+          {!embedding && !vectorstore && (
+            <div className="App-content">
+              <div className="action">
+                <ModelDropDown onModelChange={setSelectedModel} />
+                <button className="real-button" onClick={handleQandAAction}>
+                  Load current document
+                </button>
+              </div>
             </div>
-          </div>
+          )}
+          <QandABubble embedding={embedding} vectorstore={vectorstore} answer={'Test'} />
         </div>
       )}
     </div>

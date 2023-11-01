@@ -10,20 +10,46 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "types": ["vite/client", "node"],
+    "types": [
+      "vite/client",
+      "node"
+    ],
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["./src/global.d.ts"],
+    "typeRoots": [
+      "./src/global.d.ts"
+    ],
     "paths": {
-      "@root/*": ["./*"],
-      "@src/*": ["src/*"],
-      "@assets/*": ["src/assets/*"],
-      "@pages/*": ["src/pages/*"],
-      "virtual:reload-on-update-in-background-script": ["./src/global.d.ts"],
-      "virtual:reload-on-update-in-view": ["./src/global.d.ts"]
+      "@root/*": [
+        "./*"
+      ],
+      "@src/*": [
+        "src/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "virtual:reload-on-update-in-background-script": [
+        "./src/global.d.ts"
+      ],
+      "virtual:reload-on-update-in-view": [
+        "./src/global.d.ts"
+      ]
     }
   },
-  "include": ["src", "utils", "vite.config.ts", "node_modules/@types"]
+  "include": [
+    "src",
+    "utils",
+    "vite.config.ts",
+    "node_modules/@types"
+  ]
 }

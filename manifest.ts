@@ -16,7 +16,6 @@ const manifest: chrome.runtime.ManifestV3 = {
   },
   action: {
     default_title: 'Click to open panel',
-    
   },
   side_panel: {
     default_path: 'src/pages/sidePanel/index.html',
@@ -31,6 +30,9 @@ const manifest: chrome.runtime.ManifestV3 = {
       js: ['src/pages/content/index.js'],
     },
   ],
+  content_security_policy: {
+    extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+  },
   web_accessible_resources: [
     {
       resources: ['assets/js/*.js', 'assets/css/*.css', 'icon-128.png', 'icon-34.png'],
