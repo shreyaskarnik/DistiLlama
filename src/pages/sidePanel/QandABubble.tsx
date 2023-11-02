@@ -1,11 +1,24 @@
 import { talkToDocument } from '@root/src/pages/sidePanel/QandA';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
 /* eslint-disable react/prop-types */
-export default function QandAStatus({ embedding, vectorstore }) {
-  return <div>{embedding ? 'Embedding...' : vectorstore ? 'Thinking...' : ''}</div>;
+export function QandAStatus({ embedding, vectorstore }) {
+  return (
+    <div>
+      {/* while embedding==true show LinearProgress moving else show LinearProgress Solid */}
+      {embedding && vectorstore === null ? (
+        <div>
+          <span>Embedding documents...</span>
+          <LinearProgress color="primary" />
+        </div>
+      ) : (
+        <LinearProgress variant="determinate" value={100} color="success" />
+      )}
+    </div>
+  );
 }
 
-export function QandABubble({ selectedModel, vectorstore, embedding }) {
+export function QandABubble({ selectedModel, vectorstore }) {
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
 
@@ -15,11 +28,10 @@ export function QandABubble({ selectedModel, vectorstore, embedding }) {
     e.preventDefault(); // Prevent page reload on form submit
     console.log('Model used for QandA: ', selectedModel);
     console.log('Question: ', question); // You can now use the question value
-    const chain = await talkToDocument(selectedModel, question, vectorstore);
+    const chain = talkToDocument(selectedModel, question, vectorstore);
 
     for await (const chunk of chain) {
       if (chunk) {
-        console.log('chunk', chunk);
         setAnswer(prevAnswer => prevAnswer + chunk);
       }
     }
@@ -33,18 +45,21 @@ export function QandABubble({ selectedModel, vectorstore, embedding }) {
   return (
     <div>
       <form onSubmit={handleQandAAction} className="qna-form">
-        <input
-          type="text"
-          placeholder="Type your question"
-          value={question}
-          onChange={e => setQuestion(e.target.value)}
-          className="question-input"
-        />
-        <button type="submit" className="real-button">
-          Submit Question
-        </button>
+        <div className="input-button-wrapper">
+          <input
+            type="text"
+            placeholder="Type your question"
+            value={question}
+            onChange={e => setQuestion(e.target.value)}
+            className="question-input"
+          />
+          <button type="submit" className={`real-button ${question ? 'has-text' : ''}`}>
+            →
+          </button>
+        </div>
       </form>
-      <textarea placeholder="Answer" value={answer} readOnly className="answer-textarea" />
+      {/* <textarea placeholder="Answer" value={answer} readOnly className="answer-textarea" /> */}
+      {answer ? <div className="content-box">{answer}</div> : null}
     </div>
   );
 }

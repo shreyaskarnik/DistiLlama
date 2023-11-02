@@ -7,7 +7,7 @@ import Header from '@root/src/pages/common/Header';
 import { getModels } from '@pages/utils/processing';
 import { TfiWrite } from 'react-icons/tfi';
 import { TbMessageQuestion } from 'react-icons/tb';
-import QandAStatus, { QandABubble } from './QandABubble';
+import { QandAStatus, QandABubble } from './QandABubble';
 import { embedDocs } from '@root/src/pages/sidePanel/QandA';
 
 const SidePanel = () => {
@@ -15,7 +15,7 @@ const SidePanel = () => {
   const [summary, setSummary] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [embedding, setEmbedding] = useState(null);
+  const [embedding, setEmbedding] = useState(false);
   const [vectorstore, setVectorStore] = useState(null);
   const fetchModels = async () => {
     const fetchedModels = await getModels();
@@ -98,6 +98,7 @@ const SidePanel = () => {
                 setVectorStore(null);
               }}
             />
+            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           </header>
           {!embedding && !vectorstore && (
             <div className="App-content">
@@ -109,9 +110,8 @@ const SidePanel = () => {
               </div>
             </div>
           )}
-          {vectorstore === null && embedding ? <QandAStatus embedding={embedding} vectorstore={vectorstore} /> : null}
           {vectorstore !== null && !embedding ? (
-            <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} embedding={embedding} />
+            <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} />
           ) : null}
         </div>
       )}

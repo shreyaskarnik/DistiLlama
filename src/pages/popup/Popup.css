@@ -82,6 +82,7 @@
   /* Optional: A border for clarity */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   /* Optional: A subtle shadow for depth */
+  font-size: calc(10px + 2vmin);
 }
 
 @keyframes App-logo-spin {
