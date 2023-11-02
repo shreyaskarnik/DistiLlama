@@ -34,7 +34,7 @@ To generate the summary I am using the following approach:
     * Click on `Load unpacked` and select the `dist` folder from the base of the cloned project.
     * You should see the DistiLlama added to your Chrome extensions.
     * You may want to pin the extension to your Chrome toolbar for easy access.
-* If you decide to use a different LLM you will need to change this line in `src/pages/popup/Summarize.ts`
+* If you decide to use a different LLM you will need to change this line in `src/pages/sidePanel/Summarize.ts`
 
     ```typescript
     const llm = new ChatOllama({
@@ -44,7 +44,7 @@ To generate the summary I am using the following approach:
         });
     ```
 
-* If you would like to tweak the summarization chain change these lines in `src/pages/popup/Summarize.ts`
+* If you would like to tweak the summarization chain change these lines in `src/pages/sidePanel/Summarize.ts`
 
     ```typescript
     const chain = loadSummarizationChain(llm, {
