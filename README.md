@@ -27,6 +27,7 @@ To generate the summary I am using the following approach:
   * `OLLAMA_ORIGINS=*` is important as it will not block traffic from the extension.
 
 * Clone this repo
+  * Install pnpm `npm install -g pnpm`
   * run `yarn install`
   * run `yarn dev`
   * Open Chrome and navigate to `chrome://extensions/`
