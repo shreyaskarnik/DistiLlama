@@ -34,7 +34,7 @@ To generate the summary I am using the following approach:
     * Click on `Load unpacked` and select the `dist` folder from the base of the cloned project.
     * You should see the DistiLlama added to your Chrome extensions.
     * You may want to pin the extension to your Chrome toolbar for easy access.
-* If you decide to use a different LLM you will need to change this line in `src/pages/popup/Summarize.tsx`
+* If you decide to use a different LLM you will need to change this line in `src/pages/sidePanel/Summarize.ts`
 
     ```typescript
     const llm = new ChatOllama({
@@ -44,7 +44,7 @@ To generate the summary I am using the following approach:
         });
     ```
 
-* If you would like to tweak the summarization chain change these lines in `src/pages/popup/Summarize.tsx`
+* If you would like to tweak the summarization chain change these lines in `src/pages/sidePanel/Summarize.ts`
 
     ```typescript
     const chain = loadSummarizationChain(llm, {
@@ -55,7 +55,13 @@ To generate the summary I am using the following approach:
 
 ## Demo
 
-![Demo](./DistiLlama.gif)
+### Summarization
+
+![Summary](./Summary.gif)
+
+### Q&A/Chat
+
+![Q&A](./Q&A.gif)
 
 ## TODOS
 
@@ -65,8 +71,9 @@ To generate the summary I am using the following approach:
 * [ ] Improve the UI (not an expert in this area but will try to learn)
 * [ ] Add TTS support
 * [ ] Check out performance with different tuned prompts
-* [ ] Extend to chat with the page (use embeddings and LLMs for RAG)
-* [ ] Use [transformers.js](https://github.com/xenova/transformers.js) for local in browser embeddings and [Voy](https://github.com/tantaraio/voy) for the storage similar to this [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
+* [x] Extend to chat with the page (use embeddings and LLMs for RAG)
+* [x] Use [transformers.js](https://github.com/xenova/transformers.js) for local in browser embeddings and [Voy](https://github.com/tantaraio/voy) for the storage similar to this [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
+* [ ] Focus on improving quality of the summarization and chat
 
 ## References and Inspiration
 

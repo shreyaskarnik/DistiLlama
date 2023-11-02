@@ -1,0 +1,302 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  overflow-y: auto;
+  background-color: #282c34;
+  color: white;
+}
+
+.App-logo {
+  height: 30vmin;
+  pointer-events: none;
+  animation: App-logo-spin infinite 20s linear;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: none;
+  }
+}
+
+.App-header,
+.App-content,
+.App-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.App-header {
+  min-height: 20%;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  padding: 10px;
+}
+
+.App-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.real-button {
+  background-color: #007BFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: calc(10px + 2vmin);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+.content-box {
+  width: 100%;
+  padding: 30px;
+  overflow-y: auto;
+  max-height: 100%;
+  text-align: justify;
+  line-height: 1.5;
+  word-wrap: break-word;
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
+  font-size: calc(10px + 2vmin);
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-select,
+.tile-label {
+  background-color: transparent;
+  color: white;
+}
+
+.tile {
+  margin: 0 30px;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    color: #007bff;
+  }
+}
+
+.tile-label {
+  margin-top: 10px;
+  justify-content: center;
+  font-weight: bold;
+  font-size: calc(10px + 2vmin);
+
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.tile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.select-header {
+  margin-top: auto;
+  margin-bottom: 150px;
+  font-weight: bold;
+  font-size: calc(10px + 2vmin);
+}
+
+.model-select-label {
+  font-weight: bold;
+  font-size: calc(10px + 2vmin);
+}
+
+.model-container {
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  /* height: 50vh; */
+}
+
+.model-dropdown {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #61dafb;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: calc(10px + 2vmin);
+  font-weight: bold;
+}
+
+.model-dropdown:hover {
+  border-color: #007BFF;
+}
+
+.action {
+  /* should be on the middle of the page */
+  /* equidistant from top and bottom */
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+/* Styles for the question text box */
+.question-input {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #61dafb;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: calc(10px + 2vmin);
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.question-input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Styles for the answer text area */
+.answer-textarea {
+  background-color: #333;
+  color: white;
+  border: 2px solid #61dafb;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: calc(10px + 2vmin);
+  width: 100%;
+  height: 200px;
+  /* Set height to your preference */
+}
+
+.answer-textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Styles for the form */
+.qna-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+  /* Set max-width to your preference */
+  margin: auto;
+}
+
+/* Additional button styles when input has text */
+.real-button.has-text {
+  background-color: #00AA00;
+  /* Change to desired color */
+}
+
+.question-input {
+  width: calc(100% - 40px);
+  /* Reduce width by 40px to account for 20px padding on each side */
+  padding: 10px 20px;
+  /* 10px top and bottom padding, 20px left and right padding */
+  margin: 10px 0;
+  /* margin: auto; */
+  margin-left: auto;
+  /* Add some margin for spacing between the elements */
+  box-sizing: border-box;
+  /* Ensure that padding and border are included in total width/height */
+}
+
+.input-button-wrapper {
+  padding-left: 40px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+/* Path: src/pages/sidePanel/SidePanel.css */
+.chat-container {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.message-container {
+  max-height: 400px;
+  overflow-y: scroll;
+  padding: 15px;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.message.bot {
+  background-color: #f2f2f2;
+  align-self: flex-start;
+}
+
+.message.user {
+  background-color: #2196F3;
+  color: white;
+  align-self: flex-end;
+}
+
+.input-container {
+  display: flex;
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  margin-right: 10px;
+}
+
+.input-container button {
+  padding: 8px 15px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
