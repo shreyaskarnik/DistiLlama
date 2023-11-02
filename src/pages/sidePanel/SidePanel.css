@@ -169,3 +169,49 @@
   margin-top: 150px;
   margin-bottom: 150px;
 }
+
+/* Styles for the question text box */
+.question-input {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #61dafb;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: calc(10px + 2vmin);
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.question-input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Styles for the answer text area */
+.answer-textarea {
+  background-color: #333;
+  color: white;
+  border: 2px solid #61dafb;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: calc(10px + 2vmin);
+  width: 100%;
+  height: 200px;
+  /* Set height to your preference */
+}
+
+.answer-textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Styles for the form */
+.qna-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+  /* Set max-width to your preference */
+  margin: auto;
+}

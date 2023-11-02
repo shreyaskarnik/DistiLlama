@@ -7,8 +7,8 @@ import Header from '@root/src/pages/common/Header';
 import { getModels } from '@pages/utils/processing';
 import { TfiWrite } from 'react-icons/tfi';
 import { TbMessageQuestion } from 'react-icons/tb';
-import { embedDocs, talkToDocument } from '@root/src/pages/sidePanel/QandA';
-import QandABubble from './QandABubble';
+import QandAStatus, { QandABubble } from './QandABubble';
+import { embedDocs } from '@root/src/pages/sidePanel/QandA';
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
@@ -41,8 +41,6 @@ const SidePanel = () => {
     const response = await embedDocs(selectedModel);
     setVectorStore(response);
     setEmbedding(false);
-    const chain = await talkToDocument(selectedModel, 'Summarize the document in bullet points', response);
-    console.log('Chain: ', chain);
   };
   return (
     <div className="App">
@@ -111,7 +109,10 @@ const SidePanel = () => {
               </div>
             </div>
           )}
-          <QandABubble embedding={embedding} vectorstore={vectorstore} answer={'Test'} />
+          {vectorstore === null && embedding ? <QandAStatus embedding={embedding} vectorstore={vectorstore} /> : null}
+          {vectorstore !== null && !embedding ? (
+            <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} embedding={embedding} />
+          ) : null}
         </div>
       )}
     </div>
