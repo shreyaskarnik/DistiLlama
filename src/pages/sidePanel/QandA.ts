@@ -1,6 +1,5 @@
 import { getPageContent } from '@src/pages/utils/getPageContent';
 import { Ollama } from 'langchain/llms/ollama';
-import { OllamaEmbeddings } from 'langchain/embeddings/ollama';
 import { Document } from 'langchain/document';
 import { PromptTemplate } from 'langchain/prompts';
 import { StringOutputParser } from 'langchain/schema/output_parser';
@@ -9,14 +8,14 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { VoyVectorStore } from 'langchain/vectorstores/voy';
 import { Voy as VoyClient } from 'voy-search';
 import { formatDocumentsAsString } from 'langchain/util/document';
+import { HuggingFaceTransformersEmbeddings } from "langchain/embeddings/hf_transformers";
 
 const OLLAMA_BASE_URL = 'http://localhost:11435';
 async function setupVectorstore(selectedModel) {
   console.log('Setting up vectorstore', selectedModel);
-  const embeddings = new OllamaEmbeddings({
-    baseUrl: OLLAMA_BASE_URL,
-    model: selectedModel,
-  });
+  const embeddings = new HuggingFaceTransformersEmbeddings({
+  modelName: "Xenova/all-MiniLM-L6-v2",
+});
   const voyClient = new VoyClient();
   return new VoyVectorStore(voyClient, embeddings);
 }
@@ -31,7 +30,7 @@ export async function embedDocs(selectedModel) {
     }),
   );
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkOverlap: 0,
+    chunkOverlap: 20,
     chunkSize: 500,
   });
   const splitDocs = await splitter.splitDocuments(documents);
@@ -70,7 +69,7 @@ export async function* talkToDocument(selectedModel, question, vectorStore) {
     llm,
     new StringOutputParser(),
   ]);
-  const stream = await chain.stream(question, context);
+  const stream = await chain.stream(question);
 
   for await (const chunk of stream) {
     yield chunk;
