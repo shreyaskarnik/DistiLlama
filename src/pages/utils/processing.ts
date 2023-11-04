@@ -7,9 +7,8 @@ export async function getModels() {
     // we want to return the name of the model
     // so that we can use it in the dropdown selection
     for (let i = 0; i < data.models.length; i++) {
-      // split the name of the model by the colon
-      // and return the first element of the array
-      models.push(data.models[i].name.split(':')[0]);
+      // return models with tags
+      models.push(data.models[i].name);
     }
     return models;
   } catch (error) {
