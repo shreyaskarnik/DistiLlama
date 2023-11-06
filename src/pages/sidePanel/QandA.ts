@@ -8,14 +8,20 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { VoyVectorStore } from 'langchain/vectorstores/voy';
 import { Voy as VoyClient } from 'voy-search';
 import { formatDocumentsAsString } from 'langchain/util/document';
-import { HuggingFaceTransformersEmbeddings } from "langchain/embeddings/hf_transformers";
+import { HuggingFaceTransformersEmbeddings } from 'langchain/embeddings/hf_transformers';
 
 const OLLAMA_BASE_URL = 'http://localhost:11435';
+
+type ConversationalRetrievalQAChainInput = {
+  question: string;
+  chat_history: { question: string; answer: string }[];
+};
+
 async function setupVectorstore(selectedModel) {
   console.log('Setting up vectorstore', selectedModel);
   const embeddings = new HuggingFaceTransformersEmbeddings({
-  modelName: "Xenova/all-MiniLM-L6-v2",
-});
+    modelName: 'Xenova/all-MiniLM-L6-v2',
+  });
   const voyClient = new VoyClient();
   return new VoyVectorStore(voyClient, embeddings);
 }
@@ -39,17 +45,25 @@ export async function embedDocs(selectedModel) {
   return vectorstore;
 }
 
-export async function* talkToDocument(selectedModel, question, vectorStore) {
+export async function* talkToDocument(selectedModel, vectorStore, input: ConversationalRetrievalQAChainInput) {
   const llm = new Ollama({
     baseUrl: OLLAMA_BASE_URL,
     model: selectedModel,
     temperature: 0.1,
   });
-  console.log('question', question);
+  console.log('question', input.question);
+  console.log('chat_history', input.chat_history);
   console.log('vectorStore', vectorStore);
   const retriever = vectorStore.asRetriever();
   const context = retriever.pipe(formatDocumentsAsString);
   console.log('context', context);
+  const condenseQuestionTemplate = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
+
+  Chat History:
+  {chat_history}
+  Follow Up Input: {question}
+  Standalone question:`;
+  const condense_question_prompt = PromptTemplate.fromTemplate(condenseQuestionTemplate);
   const prompt = PromptTemplate.fromTemplate(`
   Answer the question based only on the following context:
   Do not use any other sources of information.
@@ -60,7 +74,16 @@ export async function* talkToDocument(selectedModel, question, vectorStore) {
   Question: {question}
   Answer:
   `);
-  const chain = RunnableSequence.from([
+  const standaloneQuestionChain = RunnableSequence.from([
+    {
+      question: (input: ConversationalRetrievalQAChainInput) => input.question,
+      chat_history: (input: ConversationalRetrievalQAChainInput) => formatChatHistory(input.chat_history),
+    },
+    condense_question_prompt,
+    llm,
+    new StringOutputParser(),
+  ]);
+  const answer_chain = RunnableSequence.from([
     {
       context: retriever.pipe(formatDocumentsAsString),
       question: new RunnablePassthrough(),
@@ -69,9 +92,19 @@ export async function* talkToDocument(selectedModel, question, vectorStore) {
     llm,
     new StringOutputParser(),
   ]);
-  const stream = await chain.stream(question);
+  const chain = standaloneQuestionChain.pipe(answer_chain);
+  const stream = await chain.stream(input);
 
   for await (const chunk of stream) {
     yield chunk;
   }
 }
+
+const formatChatHistory = (chatHistory: { question: string; answer: string }[]) => {
+  console.log('chatHistory', chatHistory);
+  const formattedDialogueTurns = chatHistory.map(
+    dialogueTurn => `Human: ${dialogueTurn.question}\nAssistant: ${dialogueTurn.answer}`,
+  );
+  console.log('formattedDialogueTurns', formattedDialogueTurns);
+  return formattedDialogueTurns.join('\n');
+};
