@@ -1,6 +1,7 @@
 import { talkToDocument } from '@root/src/pages/sidePanel/QandA';
 import { useState, useEffect, useRef } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
+import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 /* eslint-disable react/prop-types */
 export function QandAStatus({ embedding, vectorstore }) {
   return (
@@ -82,7 +83,7 @@ export function QandABubble({ selectedModel, vectorstore }) {
     <div>
       <AnsweringStatus answering={answering} />
       <div className="content-box">
-        {chat_history.length > 0 && (
+        {chat_history.length > 0 ? (
           <ul className="chat-history">
             {chat_history.map(({ question, answer }, index) => (
               <li key={index} className="chat-history-item">
@@ -102,6 +103,8 @@ export function QandABubble({ selectedModel, vectorstore }) {
             ))}
             <div ref={endOfChatHistoryRef} />
           </ul>
+        ) : (
+          <p>Ask a question to start the conversation.</p>
         )}
       </div>
       <div className="form-container">
@@ -114,8 +117,12 @@ export function QandABubble({ selectedModel, vectorstore }) {
               onChange={e => setQuestion(e.target.value)}
               className="question-input"
             />
-            <button type="submit" className={`real-button ${question ? 'has-text' : ''}`}>
-              →
+            <button
+              type="submit"
+              className={`real-button ${question ? 'has-text' : ''}`}
+              disabled={answering} // this will disable the button when answering is true
+            >
+              <BsFillArrowRightSquareFill size="2rem" />
             </button>
           </div>
         </form>
