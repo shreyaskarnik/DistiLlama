@@ -78,6 +78,7 @@
   word-wrap: break-word;
   /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
   font-size: calc(10px + 2vmin);
+  margin-bottom: 100px;
 }
 
 @keyframes App-logo-spin {
@@ -299,4 +300,54 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.chat-history {
+  list-style-type: none;
+  padding-left: 0;
+  /* Removes default padding */
+}
+
+.chat-history-item {
+  margin-bottom: 10px;
+  /* Space between each Q&A pair */
+}
+
+.chat-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  /* If you want space between the question and answer */
+}
+
+.chat-line span[role="img"] {
+  margin-right: 8px;
+  /* Adjust space between emoji and text */
+}
+
+.form-container {
+  position: fixed;
+  /* Use fixed positioning */
+  bottom: 0;
+  /* Align to the bottom of the viewport */
+  left: 0;
+  /* Align to the left of the viewport */
+  width: 100%;
+  /* Take the full width of the viewport */
+  background: #282c34;
+  /* Match the background of the .App */
+  padding: 20px;
+  /* Add some padding around the form */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  /* Optional: adds a shadow to the top of the form container */
+}
+
+/* You might need to adjust your input and button sizes to fit the new form container */
+.input-button-wrapper {
+  width: 100%;
+  /* Ensure it spans the full width of .form-container */
+  max-width: 600px;
+  /* Max width can be the same as your form */
+  margin: 0 auto;
+  /* Center it within .form-container */
 }
