@@ -7,8 +7,10 @@ import Header from '@root/src/pages/common/Header';
 import { getModels } from '@pages/utils/processing';
 import { TfiWrite } from 'react-icons/tfi';
 import { TbMessageQuestion } from 'react-icons/tb';
+import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
 import { QandAStatus, QandABubble } from './QandABubble';
 import { embedDocs } from '@root/src/pages/sidePanel/QandA';
+import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +19,7 @@ const SidePanel = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [embedding, setEmbedding] = useState(false);
   const [vectorstore, setVectorStore] = useState(null);
+  const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const fetchModels = async () => {
     const fetchedModels = await getModels();
     if (!selectedModel) {
@@ -38,7 +41,7 @@ const SidePanel = () => {
   const handleQandAAction = async () => {
     setEmbedding(true);
     console.log('Model used for QandA: ', selectedModel);
-    const response = await embedDocs(selectedModel);
+    const response = await embedDocs(selectedModel, selectedPDF);
     setVectorStore(response);
     setEmbedding(false);
   };
@@ -56,6 +59,10 @@ const SidePanel = () => {
               <div className="tile">
                 <TbMessageQuestion size="10rem" onClick={() => setSelectedOption('qanda')} />
                 <span className="tile-label">Q & A</span>
+              </div>
+              <div className="tile">
+                <HiOutlineDocumentChartBar size="10rem" onClick={() => setSelectedOption('docs')} />
+                <span className="tile-label">Chat with Docs</span>
               </div>
             </div>
           </div>
@@ -107,6 +114,45 @@ const SidePanel = () => {
                 <button className="real-button" onClick={handleQandAAction}>
                   Load current document
                 </button>
+              </div>
+            </div>
+          )}
+          {vectorstore !== null && !embedding ? (
+            <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} />
+          ) : null}
+        </div>
+      )}
+      {selectedOption === 'docs' && (
+        <div>
+          <header>
+            <Header
+              onBack={() => setSelectedOption(null)}
+              onRefresh={() => {
+                setEmbedding(false);
+                setSelectedOption(null);
+                setVectorStore(null);
+              }}
+            />
+            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
+          </header>
+          {!embedding && !vectorstore && (
+            <div className="App-content">
+              <div className="action">
+                <ModelDropDown onModelChange={setSelectedModel} />
+                <div className="form-container">
+                  <form onSubmit={handleQandAAction} className="qna-form">
+                    <div className="input-button-wrapper">
+                      <input
+                        id="file_input"
+                        type="file"
+                        accept="pdf"
+                        onChange={e => (e.target.files ? setSelectedPDF(e.target.files[0]) : null)}></input>
+                      <button type="submit" className="real-button">
+                        <BsFillArrowRightSquareFill size="2rem" />
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           )}

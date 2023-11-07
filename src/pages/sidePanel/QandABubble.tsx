@@ -9,7 +9,6 @@ export function QandAStatus({ embedding, vectorstore }) {
       {/* while embedding==true show LinearProgress moving else show LinearProgress Solid */}
       {embedding && vectorstore === null ? (
         <div>
-          <span>Embedding documents...</span>
           <LinearProgress color="primary" />
         </div>
       ) : null}
@@ -81,7 +80,6 @@ export function QandABubble({ selectedModel, vectorstore }) {
 
   return (
     <div>
-      <AnsweringStatus answering={answering} />
       <div className="content-box">
         {chat_history.length > 0 ? (
           <ul className="chat-history">
@@ -126,6 +124,7 @@ export function QandABubble({ selectedModel, vectorstore }) {
             </button>
           </div>
         </form>
+        <AnsweringStatus answering={answering} />
       </div>
     </div>
   );

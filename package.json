@@ -31,6 +31,8 @@
     "@xenova/transformers": "^2.6.0",
     "construct-style-sheets-polyfill": "^3.1.0",
     "langchain": "^0.0.175",
+    "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^4.0.189",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",

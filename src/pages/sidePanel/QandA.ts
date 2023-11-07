@@ -1,17 +1,20 @@
 import { getPageContent } from '@src/pages/utils/getPageContent';
-import { Ollama } from 'langchain/llms/ollama';
 import { Document } from 'langchain/document';
+import { HuggingFaceTransformersEmbeddings } from 'langchain/embeddings/hf_transformers';
+import { Ollama } from 'langchain/llms/ollama';
 import { PromptTemplate } from 'langchain/prompts';
 import { StringOutputParser } from 'langchain/schema/output_parser';
-import { RunnableSequence, RunnablePassthrough } from 'langchain/schema/runnable';
+import { RunnablePassthrough, RunnableSequence } from 'langchain/schema/runnable';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { formatDocumentsAsString } from 'langchain/util/document';
 import { VoyVectorStore } from 'langchain/vectorstores/voy';
 import { Voy as VoyClient } from 'voy-search';
-import { formatDocumentsAsString } from 'langchain/util/document';
-import { HuggingFaceTransformersEmbeddings } from 'langchain/embeddings/hf_transformers';
+import { type TextItem } from 'pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js';
+import * as PDFLib from 'pdfjs-dist';
+import * as pdfWorker from '../../../node_modules/pdfjs-dist/build/pdf.worker.mjs';
+PDFLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const OLLAMA_BASE_URL = 'http://localhost:11435';
-
 type ConversationalRetrievalQAChainInput = {
   question: string;
   chat_history: { question: string; answer: string }[];
@@ -25,16 +28,23 @@ async function setupVectorstore(selectedModel) {
   const voyClient = new VoyClient();
   return new VoyVectorStore(voyClient, embeddings);
 }
-export async function embedDocs(selectedModel) {
+export async function embedDocs(selectedModel, localFile) {
   console.log('Embedding documents');
+  console.log('localFile', localFile);
   const vectorstore = await setupVectorstore(selectedModel);
-  const pageContent = await getPageContent();
-  const documents: Document[] = [];
-  documents.push(
-    new Document({
-      pageContent: pageContent.textContent,
-    }),
-  );
+  let documents: Document[] = [];
+  let pageContent;
+  if (!localFile) {
+    pageContent = await getPageContent();
+    documents.push(
+      new Document({
+        pageContent: pageContent.textContent,
+      }),
+    );
+  }
+  if (localFile) {
+    documents = await handlePDFFile(localFile);
+  }
   const splitter = new RecursiveCharacterTextSplitter({
     chunkOverlap: 20,
     chunkSize: 500,
@@ -108,3 +118,42 @@ const formatChatHistory = (chatHistory: { question: string; answer: string }[]) 
   console.log('formattedDialogueTurns', formattedDialogueTurns);
   return formattedDialogueTurns.join('\n');
 };
+
+export async function handlePDFFile(selectedFile) {
+  // Load PDF document into array buffer
+  const arrayBuffer = await selectedFile.arrayBuffer();
+
+  const arrayBufferUint8 = new Uint8Array(arrayBuffer);
+  const parsedPdf = await PDFLib.getDocument(arrayBufferUint8).promise;
+
+  const meta = await parsedPdf.getMetadata().catch(() => null);
+  const documents: Document[] = [];
+
+  for (let i = 1; i <= parsedPdf.numPages; i += 1) {
+    const page = await parsedPdf.getPage(i);
+    const content = await page.getTextContent();
+
+    if (content.items.length === 0) {
+      continue;
+    }
+
+    const text = content.items.map(item => (item as TextItem).str).join('\n');
+
+    documents.push(
+      new Document({
+        pageContent: text,
+        metadata: {
+          pdf: {
+            info: meta?.info,
+            metadata: meta?.metadata,
+            totalPages: parsedPdf.numPages,
+          },
+          loc: {
+            pageNumber: i,
+          },
+        },
+      }),
+    );
+  }
+  return documents;
+}

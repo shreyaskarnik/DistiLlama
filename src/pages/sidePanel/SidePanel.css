@@ -34,6 +34,7 @@
   align-items: center;
   justify-content: center;
   color: white;
+  margin-top: 10px;
 }
 
 .App-header {
@@ -79,6 +80,7 @@
   /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
   font-size: calc(10px + 2vmin);
   margin-bottom: 100px;
+  margin-top: 25px;
 }
 
 @keyframes App-logo-spin {
@@ -183,6 +185,7 @@
   width: 100%;
   margin-bottom: 20px;
   margin-top: 10px;
+  text-align: center;
 }
 
 .question-input:focus {
@@ -350,4 +353,17 @@
   /* Max width can be the same as your form */
   margin: 0 auto;
   /* Center it within .form-container */
+}
+
+.top-container {
+  position: sticky;
+  /* This will make the element stick to the top of the page */
+  top: 0;
+  /* Defines the distance of the top outer edge of the element from the inner edge of the top of the nearest containing block */
+  z-index: 1000;
+  /* A high index ensures it stays above other elements */
+}
+
+.status {
+  margin-top: 25px;
 }
