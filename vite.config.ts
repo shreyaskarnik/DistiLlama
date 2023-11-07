@@ -53,6 +53,7 @@ export default defineConfig({
     modulePreload: false,
     reportCompressedSize: isProduction,
     rollupOptions: {
+      external: 'pdfjs-dist/build/pdf.worker.mjs',
       input: {
         content: resolve(pagesDir, 'content', 'index.ts'),
         background: resolve(pagesDir, 'background', 'index.ts'),

@@ -11,6 +11,11 @@
     /* Adding a slight curve to the top edges */
     color: #FFF;
     /* White text */
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    opacity: 0.7;
 }
 
 .button {

@@ -31,7 +31,8 @@ const manifest: chrome.runtime.ManifestV3 = {
     },
   ],
   content_security_policy: {
-    extension_pages: "script-src 'self' 'wasm-unsafe-eval' http://localhost:* http://127.0.0.1:*; script-src-elem 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    extension_pages:
+      "script-src 'self' 'wasm-unsafe-eval' http://localhost:* http://127.0.0.1:*; script-src-elem 'self' 'wasm-unsafe-eval'; object-src 'self'",
   },
   web_accessible_resources: [
     {

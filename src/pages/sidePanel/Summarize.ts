@@ -1,7 +1,7 @@
+import { getPageContent } from '@src/pages/utils/getPageContent';
 import { loadSummarizationChain } from 'langchain/chains';
 import { ChatOllama } from 'langchain/chat_models/ollama';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { getPageContent } from '@src/pages/utils/getPageContent';
 
 async function summarizeCurrentPage(selectedModel) {
   console.log('Inside summarizeCurrentPage with model: ', selectedModel);
