@@ -1,8 +1,8 @@
 {
   /* dropdown selection for choosing Models */
 }
-import { useEffect, useState } from 'react';
 import { getModels } from '@src/pages/utils/processing';
+import { useEffect, useState } from 'react';
 /* eslint-disable react/prop-types */
 const Models = ({ onModelChange }) => {
   const [models, setModels] = useState([]);

@@ -8,9 +8,9 @@ import { RunnablePassthrough, RunnableSequence } from 'langchain/schema/runnable
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { formatDocumentsAsString } from 'langchain/util/document';
 import { VoyVectorStore } from 'langchain/vectorstores/voy';
-import { Voy as VoyClient } from 'voy-search';
 import { type TextItem } from 'pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js';
 import * as PDFLib from 'pdfjs-dist';
+import { Voy as VoyClient } from 'voy-search';
 import * as pdfWorker from '../../../node_modules/pdfjs-dist/build/pdf.worker.mjs';
 PDFLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 

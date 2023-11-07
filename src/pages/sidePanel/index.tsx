@@ -1,9 +1,9 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
 import '@pages/popup/index.css';
 import Popup from '@root/src/pages/sidePanel/SidePanel';
-import refreshOnUpdate from 'virtual:reload-on-update-in-view';
 import { attachTwindStyle } from '@src/shared/style/twind';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import refreshOnUpdate from 'virtual:reload-on-update-in-view';
 
 refreshOnUpdate('pages/sidePanel');
 

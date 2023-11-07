@@ -1,16 +1,16 @@
 import '@pages/sidePanel/SidePanel.css';
-import { useState, useEffect } from 'react';
-import PageSummary from '@root/src/pages/sidePanel/PageSummary';
-import { summarizeCurrentPage } from '@root/src/pages/sidePanel/Summarize';
-import ModelDropDown from '@root/src/pages/sidePanel/Models';
-import Header from '@root/src/pages/common/Header';
 import { getModels } from '@pages/utils/processing';
-import { TfiWrite } from 'react-icons/tfi';
-import { TbMessageQuestion } from 'react-icons/tb';
-import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
-import { QandAStatus, QandABubble } from './QandABubble';
+import Header from '@root/src/pages/common/Header';
+import ModelDropDown from '@root/src/pages/sidePanel/Models';
+import PageSummary from '@root/src/pages/sidePanel/PageSummary';
 import { embedDocs } from '@root/src/pages/sidePanel/QandA';
+import { summarizeCurrentPage } from '@root/src/pages/sidePanel/Summarize';
+import { useEffect, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
+import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
+import { TbMessageQuestion } from 'react-icons/tb';
+import { TfiWrite } from 'react-icons/tfi';
+import { QandABubble, QandAStatus } from './QandABubble';
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);

@@ -1,6 +1,6 @@
-import { talkToDocument } from '@root/src/pages/sidePanel/QandA';
-import { useState, useEffect, useRef } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
+import { talkToDocument } from '@root/src/pages/sidePanel/QandA';
+import { useEffect, useRef, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 /* eslint-disable react/prop-types */
 export function QandAStatus({ embedding, vectorstore }) {
