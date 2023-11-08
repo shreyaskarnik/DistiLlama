@@ -11,7 +11,10 @@ import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
 import { TbMessageQuestion } from 'react-icons/tb';
 import { TfiWrite } from 'react-icons/tfi';
 import { QandABubble, QandAStatus } from './QandABubble';
+<<<<<<< HEAD
 import ChatWithDocument from './ChatWithDocument';
+=======
+>>>>>>> a6b53c91add56e06c64470dbc32a79aa3e9f3520
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
