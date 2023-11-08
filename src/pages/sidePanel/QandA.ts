@@ -23,7 +23,7 @@ type ConversationalRetrievalQAChainInput = {
 async function setupVectorstore(selectedModel) {
   console.log('Setting up vectorstore', selectedModel);
   const embeddings = new HuggingFaceTransformersEmbeddings({
-    modelName: 'Xenova/all-MiniLM-L6-v2',
+    modelName: 'Supabase/gte-small',
   });
   const voyClient = new VoyClient();
   return new VoyVectorStore(voyClient, embeddings);

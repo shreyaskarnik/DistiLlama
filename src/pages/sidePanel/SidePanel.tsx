@@ -11,6 +11,7 @@ import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
 import { TbMessageQuestion } from 'react-icons/tb';
 import { TfiWrite } from 'react-icons/tfi';
 import { QandABubble, QandAStatus } from './QandABubble';
+import ChatWithDocument from './ChatWithDocument';
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
@@ -136,25 +137,11 @@ const SidePanel = () => {
             <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           </header>
           {!embedding && !vectorstore && (
-            <div className="App-content">
-              <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
-                <div className="form-container">
-                  <form onSubmit={handleQandAAction} className="qna-form">
-                    <div className="input-button-wrapper">
-                      <input
-                        id="file_input"
-                        type="file"
-                        accept="pdf"
-                        onChange={e => (e.target.files ? setSelectedPDF(e.target.files[0]) : null)}></input>
-                      <button type="submit" className="real-button">
-                        <BsFillArrowRightSquareFill size="2rem" />
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+            <ChatWithDocument
+              handleQandAAction={handleQandAAction}
+              setSelectedModel={setSelectedModel}
+              setSelectedPDF={setSelectedPDF}
+            />
           )}
           {vectorstore !== null && !embedding ? (
             <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} />

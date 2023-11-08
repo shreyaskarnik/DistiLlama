@@ -367,3 +367,26 @@
 .status {
   margin-top: 25px;
 }
+
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.input-button-wrapper.dragover .dropzone {
+  border-color: #000;
+}
+
+/* Hide the default file input */
+#file_input {
+  display: none;
+}
+
+.dropzone-label.file-dragged-over {
+  background-color: #61dafb;
+  /* Light blue to indicate active drag */
+  border: 2px dashed #007bff;
+}
