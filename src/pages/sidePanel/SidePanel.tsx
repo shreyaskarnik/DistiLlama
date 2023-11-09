@@ -1,20 +1,16 @@
 import '@pages/sidePanel/SidePanel.css';
 import { getModels } from '@pages/utils/processing';
 import Header from '@root/src/pages/common/Header';
+import ChatWithDocument from '@root/src/pages/sidePanel/ChatWithDocument';
 import ModelDropDown from '@root/src/pages/sidePanel/Models';
 import PageSummary from '@root/src/pages/sidePanel/PageSummary';
 import { embedDocs } from '@root/src/pages/sidePanel/QandA';
+import { QandABubble, QandAStatus } from '@root/src/pages/sidePanel/QandABubble';
 import { summarizeCurrentPage } from '@root/src/pages/sidePanel/Summarize';
 import { useEffect, useState } from 'react';
-import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
-import { TbMessageQuestion } from 'react-icons/tb';
+import { TbMessageQuestion, TbBrandWechat } from 'react-icons/tb';
 import { TfiWrite } from 'react-icons/tfi';
-import { QandABubble, QandAStatus } from './QandABubble';
-<<<<<<< HEAD
-import ChatWithDocument from './ChatWithDocument';
-=======
->>>>>>> a6b53c91add56e06c64470dbc32a79aa3e9f3520
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
@@ -24,6 +20,7 @@ const SidePanel = () => {
   const [embedding, setEmbedding] = useState(false);
   const [vectorstore, setVectorStore] = useState(null);
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
+  const [readyToChat, setReadyToChat] = useState(false);
   const fetchModels = async () => {
     const fetchedModels = await getModels();
     if (!selectedModel) {
@@ -42,6 +39,10 @@ const SidePanel = () => {
     setSummary(response);
     setLoading(false);
   };
+  const handleChatAction = async () => {
+    console.log('Model used for chat: ', selectedModel);
+    setReadyToChat(true);
+  };
   const handleQandAAction = async () => {
     setEmbedding(true);
     console.log('Model used for QandA: ', selectedModel);
@@ -57,15 +58,19 @@ const SidePanel = () => {
             <span className="select-header">Select an option</span>
             <div className="tile-container">
               <div className="tile">
-                <TfiWrite size="10rem" onClick={() => setSelectedOption('summary')} />
-                <span className="tile-label">Summary</span>
+                <TbBrandWechat onClick={() => setSelectedOption('chat')} />
+                <span className="tile-label">Chat with LLM</span>
               </div>
               <div className="tile">
-                <TbMessageQuestion size="10rem" onClick={() => setSelectedOption('qanda')} />
-                <span className="tile-label">Q & A</span>
+                <TfiWrite onClick={() => setSelectedOption('summary')} />
+                <span className="tile-label">Summarize Current Page</span>
               </div>
               <div className="tile">
-                <HiOutlineDocumentChartBar size="10rem" onClick={() => setSelectedOption('docs')} />
+                <TbMessageQuestion onClick={() => setSelectedOption('qanda')} />
+                <span className="tile-label">Chat with Current Page</span>
+              </div>
+              <div className="tile">
+                <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} />
                 <span className="tile-label">Chat with Docs</span>
               </div>
             </div>
@@ -122,7 +127,7 @@ const SidePanel = () => {
             </div>
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
           ) : null}
         </div>
       )}
@@ -147,8 +152,37 @@ const SidePanel = () => {
             />
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
           ) : null}
+        </div>
+      )}
+      {selectedOption === 'chat' && (
+        <div>
+          <header>
+            <Header
+              onBack={() => setSelectedOption(null)}
+              onRefresh={() => {
+                setEmbedding(false);
+                setSelectedOption(null);
+                setVectorStore(null);
+                setReadyToChat(false);
+              }}
+            />
+            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
+          </header>
+          {!readyToChat && (
+            <div className="App-content">
+              <div className="action">
+                <ModelDropDown onModelChange={setSelectedModel} />
+                <button className="real-button" onClick={handleChatAction}>
+                  Chat
+                </button>
+              </div>
+            </div>
+          )}
+          {readyToChat && (
+            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+          )}
         </div>
       )}
     </div>

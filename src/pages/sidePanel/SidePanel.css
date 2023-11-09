@@ -100,14 +100,20 @@
 }
 
 .tile {
-  margin: 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  margin: 0;
+  /* Reset margin to align with the grid */
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    color: #007bff;
-  }
+.tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  color: #007bff;
 }
 
 .tile-label {
@@ -122,12 +128,29 @@
 }
 
 .tile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
-  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 50px;
+  column-gap: 50px;
+  justify-items: center;
+  padding: 50px;
+}
+
+
+/* Make icons a bit smaller for a better fit */
+.tile svg {
+  height: 8rem;
+  /* Adjust icon size */
+  width: 8rem;
+  /* Adjust icon size */
+}
+
+/* Adjust the tile label size for better readability */
+.tile-label {
+  font-size: 1rem;
+  /* Adjust label font size */
+  margin-top: 15px;
+  /* Adjust spacing between icon and label */
 }
 
 .select-header {

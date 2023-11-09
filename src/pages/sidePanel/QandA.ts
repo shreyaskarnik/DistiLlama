@@ -1,8 +1,12 @@
 import { getPageContent } from '@src/pages/utils/getPageContent';
+import { ConversationChain } from 'langchain/chains';
+import { ChatOllama } from 'langchain/chat_models/ollama';
 import { Document } from 'langchain/document';
 import { HuggingFaceTransformersEmbeddings } from 'langchain/embeddings/hf_transformers';
 import { Ollama } from 'langchain/llms/ollama';
-import { PromptTemplate } from 'langchain/prompts';
+import { BufferMemory, ChatMessageHistory } from 'langchain/memory';
+import { HumanMessage, AIMessage } from 'langchain/schema';
+import { PromptTemplate, ChatPromptTemplate, MessagesPlaceholder } from 'langchain/prompts';
 import { StringOutputParser } from 'langchain/schema/output_parser';
 import { RunnablePassthrough, RunnableSequence } from 'langchain/schema/runnable';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
@@ -14,8 +18,8 @@ import { Voy as VoyClient } from 'voy-search';
 import * as pdfWorker from '../../../node_modules/pdfjs-dist/build/pdf.worker.mjs';
 PDFLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
-const OLLAMA_BASE_URL = 'http://localhost:11435';
-type ConversationalRetrievalQAChainInput = {
+export const OLLAMA_BASE_URL = 'http://localhost:11435';
+export type ConversationalRetrievalQAChainInput = {
   question: string;
   chat_history: { question: string; answer: string }[];
 };
@@ -110,7 +114,7 @@ export async function* talkToDocument(selectedModel, vectorStore, input: Convers
   }
 }
 
-const formatChatHistory = (chatHistory: { question: string; answer: string }[]) => {
+export const formatChatHistory = (chatHistory: { question: string; answer: string }[]) => {
   console.log('chatHistory', chatHistory);
   const formattedDialogueTurns = chatHistory.map(
     dialogueTurn => `Human: ${dialogueTurn.question}\nAssistant: ${dialogueTurn.answer}`,
@@ -156,4 +160,58 @@ export async function handlePDFFile(selectedFile) {
     );
   }
   return documents;
+}
+
+export async function* chatWithLLM(selectedModel, input: ConversationalRetrievalQAChainInput) {
+  // create BufferMemory from input.chat_history
+  // console.log('input.chat_history', input.chat_history);
+  // // pastMessages is array of arrays [[HumanMessage, AIMessage], [HumanMessage, AIMessage]]
+  // const pastMessages = [];
+  // input.chat_history.forEach(element => {
+  //   const elem = [new HumanMessage(element.question), new AIMessage(element.answer)];
+  //   pastMessages.push(elem);
+  // });
+  // console.log('pastMessages', pastMessages);
+  // const memory = new BufferMemory({
+  //   chatHistory: new ChatMessageHistory(pastMessages),
+  // });
+  const llm = new ChatOllama({
+    baseUrl: OLLAMA_BASE_URL,
+    model: selectedModel,
+    temperature: 0,
+  });
+  const chatPrompt = ChatPromptTemplate.fromMessages([
+    [
+      'system',
+      'The following is a friendly conversation between a human and an assistant. The assistant polite and helpful and provides lots of specific details from its context. If the assistant does not know the answer to a question, it truthfully says it does not know.',
+    ],
+    new MessagesPlaceholder('history'),
+    ['human', '{input}'],
+  ]);
+  const chatHistory = [];
+
+  // Flatten the array of message pairs into a single array of BaseMessage instances
+  input.chat_history.forEach(element => {
+    chatHistory.push(new HumanMessage(element.question));
+    chatHistory.push(new AIMessage(element.answer));
+  });
+  const memory = new BufferMemory({
+    returnMessages: true,
+    memoryKey: 'history',
+    chatHistory: new ChatMessageHistory(chatHistory),
+  });
+  const chain = new ConversationChain({
+    memory: memory,
+    prompt: chatPrompt,
+    llm: llm,
+    verbose: true,
+  });
+  const stream = await chain.stream({
+    input: input.question,
+  });
+
+  for await (const chunk of stream) {
+    console.log('chunk', chunk);
+    yield chunk.response;
+  }
 }

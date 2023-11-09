@@ -12,7 +12,15 @@ const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF 
   const handleDragLeave = () => {
     setFileDraggedOver(false);
   };
-
+  const handleFileChange = useCallback(
+    e => {
+      if (e.target.files && e.target.files[0]) {
+        setSelectedPDF(e.target.files[0]);
+        setFileDraggedOver(true);
+      }
+    },
+    [setSelectedPDF],
+  );
   const onDrop = useCallback(
     event => {
       event.preventDefault();
@@ -31,14 +39,8 @@ const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF 
         handleQandAAction(event);
       }
     },
-    [setSelectedPDF, handleQandAAction],
+    [setSelectedPDF, handleQandAAction, handleFileChange],
   );
-  const handleFileChange = e => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedPDF(e.target.files[0]);
-      setFileDraggedOver(true);
-    }
-  };
 
   return (
     <div className="App-content">
