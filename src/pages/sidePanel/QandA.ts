@@ -163,18 +163,6 @@ export async function handlePDFFile(selectedFile) {
 }
 
 export async function* chatWithLLM(selectedModel, input: ConversationalRetrievalQAChainInput) {
-  // create BufferMemory from input.chat_history
-  // console.log('input.chat_history', input.chat_history);
-  // // pastMessages is array of arrays [[HumanMessage, AIMessage], [HumanMessage, AIMessage]]
-  // const pastMessages = [];
-  // input.chat_history.forEach(element => {
-  //   const elem = [new HumanMessage(element.question), new AIMessage(element.answer)];
-  //   pastMessages.push(elem);
-  // });
-  // console.log('pastMessages', pastMessages);
-  // const memory = new BufferMemory({
-  //   chatHistory: new ChatMessageHistory(pastMessages),
-  // });
   const llm = new ChatOllama({
     baseUrl: OLLAMA_BASE_URL,
     model: selectedModel,

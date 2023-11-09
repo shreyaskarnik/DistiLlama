@@ -36,8 +36,6 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [chat_history = [], setChatHistory] = useState([]);
   const endOfChatHistoryRef = useRef(null);
-  const [memory, setMemory] = useState(null); // eslint-disable-line @typescript-eslint/no-unused-vars
-
   const scrollToBottom = () => {
     endOfChatHistoryRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -47,24 +45,16 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
   }, [chat_history]);
 
   const handleQandAAction = async e => {
-    // clear the answer
-    setAnswer('');
-    setAnswering(true);
     e.preventDefault(); // Prevent page reload on form submit
     console.log('Model used for QandA: ', selectedModel);
     console.log('Question: ', question); // You can now use the question value
-    let chain = null;
-    if (taskType === 'qanda' || taskType === 'docs') {
-      chain = talkToDocument(selectedModel, vectorstore, {
-        question,
-        chat_history: chat_history,
-      });
-    } else {
-      chain = chatWithLLM(selectedModel, {
-        question,
-        chat_history: chat_history,
-      });
-    }
+    // clear the answer
+    setAnswer('');
+    setAnswering(true);
+    const chain =
+      taskType === 'qanda' || taskType === 'docs'
+        ? talkToDocument(selectedModel, vectorstore, { question, chat_history })
+        : chatWithLLM(selectedModel, { question, chat_history });
     let completeAnswer = ''; // Initialize a variable to hold the full answer
     for await (const chunk of chain) {
       if (chunk) {
