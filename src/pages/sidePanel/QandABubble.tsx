@@ -1,5 +1,5 @@
 import LinearProgress from '@mui/material/LinearProgress';
-import { talkToDocument } from '@root/src/pages/sidePanel/QandA';
+import { talkToDocument, chatWithLLM } from '@root/src/pages/sidePanel/QandA';
 import { useEffect, useRef, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 /* eslint-disable react/prop-types */
@@ -28,7 +28,7 @@ export function AnsweringStatus({ answering }) {
   );
 }
 
-export function QandABubble({ selectedModel, vectorstore }) {
+export function QandABubble({ taskType, selectedModel, vectorstore }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
@@ -36,7 +36,6 @@ export function QandABubble({ selectedModel, vectorstore }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [chat_history = [], setChatHistory] = useState([]);
   const endOfChatHistoryRef = useRef(null);
-
   const scrollToBottom = () => {
     endOfChatHistoryRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -46,16 +45,16 @@ export function QandABubble({ selectedModel, vectorstore }) {
   }, [chat_history]);
 
   const handleQandAAction = async e => {
-    // clear the answer
-    setAnswer('');
-    setAnswering(true);
     e.preventDefault(); // Prevent page reload on form submit
     console.log('Model used for QandA: ', selectedModel);
     console.log('Question: ', question); // You can now use the question value
-    const chain = talkToDocument(selectedModel, vectorstore, {
-      question,
-      chat_history: chat_history,
-    });
+    // clear the answer
+    setAnswer('');
+    setAnswering(true);
+    const chain =
+      taskType === 'qanda' || taskType === 'docs'
+        ? talkToDocument(selectedModel, vectorstore, { question, chat_history })
+        : chatWithLLM(selectedModel, { question, chat_history });
     let completeAnswer = ''; // Initialize a variable to hold the full answer
     for await (const chunk of chain) {
       if (chunk) {

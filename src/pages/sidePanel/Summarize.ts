@@ -2,6 +2,7 @@ import { getPageContent } from '@src/pages/utils/getPageContent';
 import { loadSummarizationChain } from 'langchain/chains';
 import { ChatOllama } from 'langchain/chat_models/ollama';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { OLLAMA_BASE_URL } from '@src/pages/sidePanel/QandA';
 
 async function summarizeCurrentPage(selectedModel) {
   console.log('Inside summarizeCurrentPage with model: ', selectedModel);
@@ -11,7 +12,7 @@ async function summarizeCurrentPage(selectedModel) {
     if (!pageContent) return;
 
     const llm = new ChatOllama({
-      baseUrl: 'http://localhost:11435', // change if you are using a different endpoint
+      baseUrl: OLLAMA_BASE_URL, // change if you are using a different endpoint
       temperature: 0.3, // change if you want to experiment with different temperatures
       model: selectedModel, // change if you want to use a different model
     });
