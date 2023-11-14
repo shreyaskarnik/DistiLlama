@@ -4,11 +4,16 @@ import { ChatOllama } from 'langchain/chat_models/ollama';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OLLAMA_BASE_URL } from '@src/pages/sidePanel/QandA';
 
+export type SummarizationResponse = {
+  text: string;
+  pageURL: string;
+  tabID?: number;
+};
+
 async function summarizeCurrentPage(selectedModel) {
   console.log('Inside summarizeCurrentPage with model: ', selectedModel);
   try {
     const pageContent = await getPageContent();
-
     if (!pageContent) return;
 
     const llm = new ChatOllama({
@@ -27,7 +32,11 @@ async function summarizeCurrentPage(selectedModel) {
     const response = await chain.call({
       input_documents: docs,
     });
-    return response.text;
+    return {
+      text: response.text,
+      pageURL: pageContent.pageURL,
+      tabID: pageContent.tabID,
+    } as SummarizationResponse;
   } catch (error) {
     console.error(error);
   }

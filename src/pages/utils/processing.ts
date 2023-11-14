@@ -13,6 +13,6 @@ export async function getModels() {
     return models;
   } catch (error) {
     console.error(error);
-    return [];
+    throw error;
   }
 }

@@ -2,6 +2,7 @@ import { Readability } from '@mozilla/readability';
 
 export type GetPageContentRequest = {
   action: 'getPageContent';
+  tabID?: number;
 };
 
 export type GetPageContentResponse = {
@@ -14,6 +15,8 @@ export type GetPageContentResponse = {
   dir: string;
   siteName: string;
   lang: string;
+  pageURL: string;
+  tabID?: number;
 };
 
 chrome.runtime.onMessage.addListener((request: GetPageContentRequest, _sender, sendResponse) => {
@@ -23,7 +26,9 @@ chrome.runtime.onMessage.addListener((request: GetPageContentRequest, _sender, s
       console.log('extracting content');
       const article = new Readability(documentClone).parse();
       if (article) {
-        sendResponse(article as GetPageContentResponse);
+        const a: GetPageContentResponse = { ...article, pageURL: documentClone.URL, tabID: request.tabID };
+        console.log('sending response', a);
+        sendResponse(a);
       } else {
         sendResponse({ error: 'Readability failed' });
       }

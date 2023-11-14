@@ -10,6 +10,7 @@ export async function getPageContent() {
   try {
     return await chrome.tabs.sendMessage<GetPageContentRequest, GetPageContentResponse>(tab.id, {
       action: 'getPageContent',
+      tabID: tab.id,
     });
   } catch (error) {
     console.error(error);

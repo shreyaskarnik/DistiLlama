@@ -413,3 +413,118 @@
   /* Light blue to indicate active drag */
   border: 2px dashed #007bff;
 }
+
+.summary-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #282c34;
+  color: white;
+  padding: 15px 30px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: calc(10px + 1vmin);
+}
+
+.summary-footer a {
+  color: #61dafb;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.summary-footer a:hover {
+  text-decoration: underline;
+  color: #9bd1ff;
+}
+
+.summary-footer>div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* Adds space between elements in flex container */
+  flex-wrap: wrap;
+  /* Allows items to wrap if needed */
+}
+
+.summary-footer a {
+  word-break: break-all;
+  /* To ensure long URLs wrap and don't overflow */
+  max-width: 80%;
+  /* Adjust as needed for your layout */
+}
+
+.summary-footer div:last-child {
+  cursor: pointer;
+}
+
+.summary-footer svg {
+  fill: #61dafb;
+  transition: fill 0.3s;
+}
+
+.summary-footer div:last-child:hover svg {
+  fill: #9bd1ff;
+}
+
+.summary-footer div:last-child {
+  margin-left: auto;
+  /* Pushes the tab icon to the end of the footer */
+}
+
+.server-not-running {
+  /* background-color: #333 !important; */
+  /* Ensures this background color is used */
+  color: white !important;
+  font-size: auto !important;
+  /* border-left: 4px solid #61dafb !important; */
+  padding: 20px !important;
+  margin: 20px auto !important;
+  /* Centers the block and provides margin */
+  text-align: left !important;
+  /* border-radius: 4px !important; */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; */
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  display: block !important;
+  max-height: 100vh !important;
+  overflow-y: auto !important;
+  /* Adds scrolling to the container */
+}
+
+/* Specific markdown styles if needed */
+.server-not-running h1,
+.server-not-running h2,
+.server-not-running h3,
+.server-not-running h4,
+.server-not-running h5,
+.server-not-running h6 {
+  color: #61dafb !important;
+  /* Style for headers */
+  margin-top: 1em !important;
+}
+
+.server-not-running p {
+  margin-bottom: 1em !important;
+}
+
+.server-not-running a {
+  color: #9bd1ff !important;
+  /* Style for links */
+  text-decoration: underline !important;
+}
+
+/* Ensure code blocks have a distinct style */
+.server-not-running pre,
+.server-not-running code {
+  background-color: #2d2d2d !important;
+  /* Dark background for code blocks */
+  color: #f8f9fa !important;
+  /* Light color for text */
+  padding: 5px !important;
+  border-radius: 4px !important;
+  overflow-x: auto !important;
+}
