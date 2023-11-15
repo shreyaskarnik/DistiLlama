@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { HiOutlineDocumentChartBar } from 'react-icons/hi2';
 import { TbMessageQuestion, TbBrandWechat } from 'react-icons/tb';
 import { TfiWrite } from 'react-icons/tfi';
+import Instructions from './Instructions';
 
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
@@ -21,10 +22,17 @@ const SidePanel = () => {
   const [vectorstore, setVectorStore] = useState(null);
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const [readyToChat, setReadyToChat] = useState(false);
+  const [serverRunning, setServerRunning] = useState(false);
   const fetchModels = async () => {
-    const fetchedModels = await getModels();
-    if (!selectedModel) {
-      setSelectedModel(fetchedModels[0]);
+    try {
+      const fetchedModels = await getModels();
+      if (!selectedModel) {
+        setSelectedModel(fetchedModels[0]);
+        setServerRunning(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setServerRunning(false);
     }
   };
 
@@ -54,27 +62,31 @@ const SidePanel = () => {
     <div className="App">
       {selectedOption === null && (
         <div className="App-content">
-          <div>
-            <span className="select-header">Select an option</span>
-            <div className="tile-container">
-              <div className="tile">
-                <TbBrandWechat onClick={() => setSelectedOption('chat')} />
-                <span className="tile-label">Chat with LLM</span>
-              </div>
-              <div className="tile">
-                <TfiWrite onClick={() => setSelectedOption('summary')} />
-                <span className="tile-label">Summarize Current Page</span>
-              </div>
-              <div className="tile">
-                <TbMessageQuestion onClick={() => setSelectedOption('qanda')} />
-                <span className="tile-label">Chat with Current Page</span>
-              </div>
-              <div className="tile">
-                <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} />
-                <span className="tile-label">Chat with Docs</span>
+          {!serverRunning ? (
+            <Instructions />
+          ) : (
+            <div>
+              <span className="select-header">Select an option</span>
+              <div className="tile-container">
+                <div className="tile">
+                  <TbBrandWechat onClick={() => setSelectedOption('chat')} />
+                  <span className="tile-label">Chat with LLM</span>
+                </div>
+                <div className="tile">
+                  <TfiWrite onClick={() => setSelectedOption('summary')} />
+                  <span className="tile-label">Summarize Current Page</span>
+                </div>
+                <div className="tile">
+                  <TbMessageQuestion onClick={() => setSelectedOption('qanda')} />
+                  <span className="tile-label">Chat with Current Page</span>
+                </div>
+                <div className="tile">
+                  <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} />
+                  <span className="tile-label">Chat with Docs</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 
@@ -99,7 +111,7 @@ const SidePanel = () => {
               </div>
             </div>
           )}
-          <PageSummary loading={loading} summary={summary} />
+          <PageSummary loading={loading} summary={summary} taskType={selectedOption} />
         </div>
       )}
 

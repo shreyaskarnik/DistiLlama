@@ -32,7 +32,13 @@ async function setupVectorstore(selectedModel) {
   const voyClient = new VoyClient();
   return new VoyVectorStore(voyClient, embeddings);
 }
-export async function embedDocs(selectedModel, localFile) {
+export type EmbedDocsOutput = {
+  vectorstore: VoyVectorStore;
+  pageURL?: string;
+  tabID?: number;
+  fileName?: string;
+};
+export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutput> {
   console.log('Embedding documents');
   console.log('localFile', localFile);
   const vectorstore = await setupVectorstore(selectedModel);
@@ -56,7 +62,12 @@ export async function embedDocs(selectedModel, localFile) {
   const splitDocs = await splitter.splitDocuments(documents);
   await vectorstore.addDocuments(splitDocs);
   console.log('Added documents to vectorstore');
-  return vectorstore;
+  if (pageContent && !localFile) {
+    return { vectorstore, pageURL: pageContent.pageURL, tabID: pageContent.tabID } as EmbedDocsOutput;
+  }
+  if (localFile && !pageContent) {
+    return { vectorstore, fileName: localFile.name } as EmbedDocsOutput;
+  }
 }
 
 export async function* talkToDocument(selectedModel, vectorStore, input: ConversationalRetrievalQAChainInput) {
