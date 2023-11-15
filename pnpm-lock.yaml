@@ -32,6 +32,9 @@ dependencies:
   pdfjs-dist:
     specifier: ^4.0.189
     version: 4.0.189
+  prop-types:
+    specifier: ^15.8.1
+    version: 15.8.1
   react:
     specifier: 18.2.0
     version: 18.2.0
