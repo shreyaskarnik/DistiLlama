@@ -111,7 +111,7 @@ const SidePanel = () => {
               </div>
             </div>
           )}
-          <PageSummary loading={loading} summary={summary} />
+          <PageSummary loading={loading} summary={summary} taskType={selectedOption} />
         </div>
       )}
 

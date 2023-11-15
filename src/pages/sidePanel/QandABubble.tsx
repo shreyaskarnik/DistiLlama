@@ -39,6 +39,22 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
   const scrollToBottom = () => {
     endOfChatHistoryRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+  const formContainerRef = useRef(null);
+  const [formContainerHeight, setFormContainerHeight] = useState(0);
+  const updateFormContainerHeight = () => {
+    if (formContainerRef.current) {
+      const height = formContainerRef.current.getBoundingClientRect().height;
+      setFormContainerHeight(height);
+    }
+  };
+  useEffect(() => {
+    updateFormContainerHeight();
+    window.addEventListener('resize', updateFormContainerHeight);
+
+    // Clean up the event listener
+    return () => window.removeEventListener('resize', updateFormContainerHeight);
+  }, []);
+  console.log('formContainerHeight: ', formContainerHeight);
 
   useEffect(() => {
     scrollToBottom();
@@ -53,7 +69,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
     setAnswering(true);
     const chain =
       taskType === 'qanda' || taskType === 'docs'
-        ? talkToDocument(selectedModel, vectorstore, { question, chat_history })
+        ? talkToDocument(selectedModel, vectorstore.vectorstore, { question, chat_history })
         : chatWithLLM(selectedModel, { question, chat_history });
     let completeAnswer = ''; // Initialize a variable to hold the full answer
     for await (const chunk of chain) {
@@ -104,7 +120,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
           <p>Ask a question to start the conversation.</p>
         )}
       </div>
-      <div className="form-container">
+      <div className="form-container" ref={formContainerRef}>
         <form onSubmit={handleQandAAction} className="qna-form">
           <div className="input-button-wrapper">
             <input
@@ -123,6 +139,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
             </button>
           </div>
         </form>
+        {/* <PageMetadata metadata={vectorstore} taskType={taskType} formContainerHeight={formContainerHeight} /> */}
         <AnsweringStatus answering={answering} />
       </div>
     </div>
