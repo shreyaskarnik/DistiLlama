@@ -23,6 +23,9 @@ const SidePanel = () => {
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const [readyToChat, setReadyToChat] = useState(false);
   const [serverRunning, setServerRunning] = useState(false);
+  const resetTaskStates = () => {
+    setVectorStore(null);
+  };
   const fetchModels = async () => {
     try {
       const fetchedModels = await getModels();
@@ -38,6 +41,13 @@ const SidePanel = () => {
 
   useEffect(() => {
     fetchModels();
+    setSelectedOption(null);
+    setSummary(null);
+    setEmbedding(false);
+    setVectorStore(null);
+    setReadyToChat(false);
+    setSelectedPDF(null);
+    resetTaskStates();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSummarizeAction = async () => {

@@ -4,42 +4,17 @@ import ModelDropDown from '@root/src/pages/sidePanel/Models';
 
 // eslint-disable-next-line react/prop-types
 const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF }) => {
-  const [fileDraggedOver, setFileDraggedOver] = useState(false);
-  const onDragOver = useCallback(event => {
-    event.preventDefault(); // Prevent file from being opened
-    setFileDraggedOver(true);
-  }, []);
-  const handleDragLeave = () => {
-    setFileDraggedOver(false);
-  };
+  const [selectedFileName, setSelectedFileName] = useState('');
+
   const handleFileChange = useCallback(
     e => {
       if (e.target.files && e.target.files[0]) {
-        setSelectedPDF(e.target.files[0]);
-        setFileDraggedOver(true);
+        const file = e.target.files[0];
+        setSelectedPDF(file);
+        setSelectedFileName(file.name); // Set the file name
       }
     },
     [setSelectedPDF],
-  );
-  const onDrop = useCallback(
-    event => {
-      event.preventDefault();
-      setFileDraggedOver(false);
-      if (event.dataTransfer.files && event.dataTransfer.files[0]) {
-        const file = event.dataTransfer.files[0];
-        setSelectedPDF(file);
-        // Create a new event with the file as the target value
-        const syntheticEvent = {
-          target: {
-            files: [file],
-          },
-        };
-        handleFileChange(syntheticEvent); // Handle the file selection
-        // Trigger the Q&A action as if the form was submitted
-        handleQandAAction(event);
-      }
-    },
-    [setSelectedPDF, handleQandAAction, handleFileChange],
   );
 
   return (
@@ -48,26 +23,22 @@ const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF 
         <ModelDropDown onModelChange={setSelectedModel} />
         <div className="form-container">
           <form onSubmit={handleQandAAction} className="qna-form">
-            <div className="input-button-wrapper" onDragOver={onDragOver} onDrop={onDrop}>
+            <div className="input-button-wrapper">
               <input
                 id="file_input"
                 type="file"
                 accept=".pdf"
                 onChange={handleFileChange}
-                style={{ display: 'none' }} // Hide the input field
+                style={{ display: 'none' }}
               />
-              <label
-                htmlFor="file_input"
-                className={`dropzone-label ${fileDraggedOver ? 'file-dragged-over' : ''}`}
-                onDragOver={onDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={onDrop}>
-                Drag and drop your PDF here, or click to select files
+              <label htmlFor="file_input" className="dropzone-label">
+                {selectedFileName || 'Click to select PDF file'}
               </label>
               <button type="submit" className="real-button">
                 <BsFillArrowRightSquareFill size="2rem" />
               </button>
             </div>
+            {selectedFileName && <div className="file-name-display">Selected File: {selectedFileName}</div>}
           </form>
         </div>
       </div>
