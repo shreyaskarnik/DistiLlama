@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 import ModelDropDown from '@root/src/pages/sidePanel/Models';
 
@@ -41,6 +41,11 @@ const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF 
     },
     [setSelectedPDF, handleQandAAction, handleFileChange],
   );
+
+  useEffect(() => {
+    setSelectedPDF(null);
+    setSelectedModel(null);
+  }, [setSelectedModel, setSelectedPDF]);
 
   return (
     <div className="App-content">

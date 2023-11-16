@@ -2,6 +2,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { talkToDocument, chatWithLLM } from '@root/src/pages/sidePanel/QandA';
 import { useEffect, useRef, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
+import PageMetadata from '@root/src/pages/sidePanel/PageMetadata';
 /* eslint-disable react/prop-types */
 export function QandAStatus({ embedding, vectorstore }) {
   return (
@@ -29,6 +30,7 @@ export function AnsweringStatus({ answering }) {
 }
 
 export function QandABubble({ taskType, selectedModel, vectorstore }) {
+  console.log('QandABubble: ', taskType, selectedModel, vectorstore);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
@@ -40,22 +42,17 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
     endOfChatHistoryRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   const formContainerRef = useRef(null);
-  const [formContainerHeight, setFormContainerHeight] = useState(0);
-  const updateFormContainerHeight = () => {
-    if (formContainerRef.current) {
-      const height = formContainerRef.current.getBoundingClientRect().height;
-      setFormContainerHeight(height);
-    }
+  const handleTextAreaInput = e => {
+    e.target.style.height = 'auto'; // Reset the height
+    e.target.style.height = `${e.target.scrollHeight}px`; // Set the height equal to the scroll height
   };
+
   useEffect(() => {
-    updateFormContainerHeight();
-    window.addEventListener('resize', updateFormContainerHeight);
-
-    // Clean up the event listener
-    return () => window.removeEventListener('resize', updateFormContainerHeight);
-  }, []);
-  console.log('formContainerHeight: ', formContainerHeight);
-
+    setAnswer('');
+    setQuestion('');
+    setAnswering(false);
+    setChatHistory([]);
+  }, [vectorstore]);
   useEffect(() => {
     scrollToBottom();
   }, [chat_history]);
@@ -123,12 +120,13 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
       <div className="form-container" ref={formContainerRef}>
         <form onSubmit={handleQandAAction} className="qna-form">
           <div className="input-button-wrapper">
-            <input
-              type="text"
+            <textarea
               placeholder="Type your question"
               value={question}
+              onInput={handleTextAreaInput}
               onChange={e => setQuestion(e.target.value)}
               className="question-input"
+              style={{ overflowY: 'hidden' }} // Prevent scrollbar
             />
             <button
               type="submit"
@@ -139,8 +137,8 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
             </button>
           </div>
         </form>
-        {/* <PageMetadata metadata={vectorstore} taskType={taskType} formContainerHeight={formContainerHeight} /> */}
         <AnsweringStatus answering={answering} />
+        <PageMetadata metadata={vectorstore} taskType={taskType} />
       </div>
     </div>
   );

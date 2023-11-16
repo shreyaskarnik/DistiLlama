@@ -209,6 +209,8 @@
   margin-bottom: 20px;
   margin-top: 10px;
   text-align: center;
+  resize: none;
+  overflow-y: hidden;
 }
 
 .question-input:focus {
@@ -343,11 +345,12 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  margin-top: 20px;
   /* If you want space between the question and answer */
 }
 
 .chat-line span[role="img"] {
-  margin-right: 8px;
+  margin-right: 25px;
   /* Adjust space between emoji and text */
 }
 
@@ -364,8 +367,6 @@
   /* Match the background of the .App */
   padding: 20px;
   /* Add some padding around the form */
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-  /* Optional: adds a shadow to the top of the form container */
 }
 
 /* You might need to adjust your input and button sizes to fit the new form container */
@@ -414,71 +415,70 @@
   border: 2px dashed #007bff;
 }
 
-.summary-footer-fixed {
-  position: fixed;
+/* PageMetadata Component Styles */
+
+.page-metadata {
   bottom: 0;
   left: 0;
   width: 100%;
-}
-
-.summary-docs {
-  padding: 0;
-}
-
-.summary-footer {
-  background-color: #282c34;
+  background: #282c34;
   color: white;
-  padding: 15px 30px;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
+  /* Align content to the start */
   align-items: center;
-  font-size: calc(10px + 1vmin);
+  font-size: 0.9em;
+  /* Adjust base font size as necessary */
+  z-index: 10;
 }
 
-.summary-footer a {
+.page-metadata-summary {
+  position: fixed;
+  padding: 10px;
+}
+
+.metadata-content {
+  display: flex;
+  align-items: center;
+  /* Space between items */
+  gap: 5px;
+  padding-left: 35px;
+}
+
+.icon-wrapper {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  /* Padding around the icon for easier clickability */
+}
+
+.chatting-with {
+  margin-right: 5px;
+  /* Space after 'Chatting with:' text */
+}
+
+.page-metadata a {
   color: #61dafb;
   text-decoration: none;
-  transition: color 0.3s;
+  /* Removes underline */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.summary-footer a:hover {
+.page-metadata a:hover {
   text-decoration: underline;
-  color: #9bd1ff;
+  /* Adds underline on hover */
 }
 
-.summary-footer>div {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  /* Adds space between elements in flex container */
-  flex-wrap: wrap;
-  /* Allows items to wrap if needed */
-}
-
-.summary-footer a {
-  word-break: break-all;
-  /* To ensure long URLs wrap and don't overflow */
-  max-width: 80%;
-  /* Adjust as needed for your layout */
-}
-
-.summary-footer div:last-child {
-  cursor: pointer;
-}
-
-.summary-footer svg {
-  fill: #61dafb;
-  transition: fill 0.3s;
-}
-
-.summary-footer div:last-child:hover svg {
-  fill: #9bd1ff;
-}
-
-.summary-footer div:last-child {
-  margin-left: auto;
-  /* Pushes the tab icon to the end of the footer */
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .page-metadata a {
+    max-width: 100px;
+    /* Adjust the max width for smaller screens */
+  }
 }
 
 .server-not-running {

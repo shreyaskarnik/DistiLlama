@@ -51,8 +51,7 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
         pageContent: pageContent.textContent,
       }),
     );
-  }
-  if (localFile) {
+  } else {
     documents = await handlePDFFile(localFile);
   }
   const splitter = new RecursiveCharacterTextSplitter({
@@ -62,12 +61,10 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
   const splitDocs = await splitter.splitDocuments(documents);
   await vectorstore.addDocuments(splitDocs);
   console.log('Added documents to vectorstore');
-  if (pageContent && !localFile) {
-    return { vectorstore, pageURL: pageContent.pageURL, tabID: pageContent.tabID } as EmbedDocsOutput;
-  }
-  if (localFile && !pageContent) {
-    return { vectorstore, fileName: localFile.name } as EmbedDocsOutput;
-  }
+  
+  return pageContent
+    ? ({ vectorstore, pageURL: pageContent.pageURL, tabID: pageContent.tabID } as EmbedDocsOutput)
+    : ({ vectorstore, fileName: localFile.name } as EmbedDocsOutput);
 }
 
 export async function* talkToDocument(selectedModel, vectorStore, input: ConversationalRetrievalQAChainInput) {

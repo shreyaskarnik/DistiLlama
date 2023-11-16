@@ -15,25 +15,12 @@ function switchToTab(tabId, pageURL) {
   });
 }
 // eslint-disable-next-line react/prop-types
-export default function PageMetadata({ metadata, taskType, formContainerHeight }) {
-  const style = formContainerHeight ? { bottom: `${formContainerHeight}px` } : {};
-  let className = !formContainerHeight ? 'summary-footer' : 'summary-footer summary-footer-fixed';
-  if (metadata.fileName !== '') {
-    className += ' summary-docs';
-  }
+export default function PageMetadata({ metadata, taskType }) {
+  console.log('PageMetadata: ', metadata, taskType);
   return metadata ? (
-    <div>
-      <div className={className} style={style}>
-        {metadata.pageURL ? (
-          <div>
-            {taskType === 'summary' ? <span>Summarized</span> : null}
-            {taskType === 'qanda' ? <span>Chatting with</span> : null}
-            <a href={metadata.pageURL} target="_blank" rel="noopener noreferrer">
-              {metadata.pageURL}
-            </a>
-          </div>
-        ) : null}
-        {metadata.tabID ? (
+    <div className={`page-metadata${taskType === 'summary' ? ' page-metadata-summary' : ''}`}>
+      <div className="metadata-content">
+        {metadata.tabID && (
           <div
             onClick={() => switchToTab(metadata.tabID, metadata.pageURL)}
             onKeyDown={event => {
@@ -43,14 +30,21 @@ export default function PageMetadata({ metadata, taskType, formContainerHeight }
             }}
             tabIndex={0}
             role="button"
-            style={{ cursor: 'pointer' }}>
-            <VscBrowser size="1.5rem" />
+            className="icon-wrapper"
+            title="Switch to tab">
+            <VscBrowser size="1em" /> {/* Adjust the size as needed */}
           </div>
-        ) : null}
-        {metadata.fileName ? (
-          <div>
-            <span>Chatting with: {metadata.fileName}</span>
-          </div>
+        )}
+        {/* Display task type specific text */}
+        {taskType === 'summary' && <span className="task-type-text">Summarized: </span>}
+        {taskType === 'qanda' && <span className="task-type-text">Chatting with: </span>}
+        {/* Display the page URL or file name */}
+        {metadata.pageURL ? (
+          <a href={metadata.pageURL} target="_blank" rel="noopener noreferrer">
+            {metadata.pageURL}
+          </a>
+        ) : metadata.fileName ? (
+          <span className="task-type-text">Chatting with: {metadata.fileName}</span>
         ) : null}
       </div>
     </div>
@@ -59,7 +53,6 @@ export default function PageMetadata({ metadata, taskType, formContainerHeight }
 
 PageMetadata.propTypes = {
   taskType: PropTypes.string.isRequired,
-  formContainerHeight: PropTypes.number,
   metadata: PropTypes.shape({
     text: PropTypes.string, // can be optional
     pageURL: PropTypes.string, // can be optional
