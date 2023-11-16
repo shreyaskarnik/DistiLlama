@@ -46,6 +46,13 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
     e.target.style.height = 'auto'; // Reset the height
     e.target.style.height = `${e.target.scrollHeight}px`; // Set the height equal to the scroll height
   };
+  const handleKeyPress = e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      // Check if Enter was pressed without the shift key
+      e.preventDefault(); // Prevent the default action to avoid inserting a new line
+      handleQandAAction(e); // Call your existing form submission handler
+    }
+  };
 
   useEffect(() => {
     setAnswer('');
@@ -125,6 +132,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
               value={question}
               onInput={handleTextAreaInput}
               onChange={e => setQuestion(e.target.value)}
+              onKeyDown={handleKeyPress}
               className="question-input"
               style={{ overflowY: 'hidden' }} // Prevent scrollbar
             />
