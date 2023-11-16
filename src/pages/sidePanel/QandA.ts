@@ -61,7 +61,7 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
   const splitDocs = await splitter.splitDocuments(documents);
   await vectorstore.addDocuments(splitDocs);
   console.log('Added documents to vectorstore');
-  
+
   return pageContent
     ? ({ vectorstore, pageURL: pageContent.pageURL, tabID: pageContent.tabID } as EmbedDocsOutput)
     : ({ vectorstore, fileName: localFile.name } as EmbedDocsOutput);

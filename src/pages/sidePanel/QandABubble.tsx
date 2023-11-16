@@ -144,6 +144,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
             </button>
           </div>
         </form>
+        {/* <PageMetadata metadata={vectorstore} taskType={taskType} formContainerHeight={formContainerHeight} /> */}
         <AnsweringStatus answering={answering} />
         <PageMetadata metadata={vectorstore} taskType={taskType} />
       </div>

@@ -1,5 +1,5 @@
 import { LinearProgress } from '@mui/material';
-import PageMetadata from './PageMetadata';
+import PageMetadata from '@root/src/pages/sidePanel/PageMetadata';
 
 /* eslint-disable react/prop-types */
 export default function PageSummary({ loading, summary, taskType }) {
