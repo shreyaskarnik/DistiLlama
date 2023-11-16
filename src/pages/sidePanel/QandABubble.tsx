@@ -30,7 +30,6 @@ export function AnsweringStatus({ answering }) {
 }
 
 export function QandABubble({ taskType, selectedModel, vectorstore }) {
-  console.log('QandABubble: ', taskType, selectedModel, vectorstore);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');

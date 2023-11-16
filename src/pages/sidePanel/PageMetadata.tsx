@@ -16,7 +16,6 @@ function switchToTab(tabId, pageURL) {
 }
 // eslint-disable-next-line react/prop-types
 export default function PageMetadata({ metadata, taskType }) {
-  console.log('PageMetadata: ', metadata, taskType);
   return metadata ? (
     <div className={`page-metadata${taskType === 'summary' ? ' page-metadata-summary' : ''}`}>
       <div className="metadata-content">
