@@ -14,7 +14,10 @@ export default function PageSummary({ loading, summary, taskType }) {
         </div>
       ) : summary ? (
         <div>
-          <div className="content-box">{summary.text}</div>
+          <div className="content-box">
+            <h2 className="summary-title">{summary.title}</h2>
+            <div className="summary-body">{summary.text}</div>
+          </div>
           <div className="form-container">
             <PageMetadata metadata={summary} taskType={taskType} />
           </div>
