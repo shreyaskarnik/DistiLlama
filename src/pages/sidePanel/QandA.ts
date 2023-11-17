@@ -207,6 +207,6 @@ export async function* chatWithLLM(selectedModel, input: ConversationalRetrieval
   });
 
   for await (const chunk of stream) {
-    yield chunk;
+    yield chunk.response;
   }
 }
