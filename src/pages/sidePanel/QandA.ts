@@ -49,6 +49,16 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
     documents.push(
       new Document({
         pageContent: pageContent.textContent,
+        metadata: {
+          pageURL: pageContent.pageURL,
+          title: pageContent.title,
+          length: pageContent.length,
+          excerpt: pageContent.excerpt,
+          byline: pageContent.byline,
+          dir: pageContent.dir,
+          siteName: pageContent.siteName,
+          lang: pageContent.lang,
+        },
       }),
     );
   } else {
