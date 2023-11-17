@@ -38,7 +38,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
   const [chat_history = [], setChatHistory] = useState([]);
   const endOfChatHistoryRef = useRef(null);
   const scrollToBottom = () => {
-    endOfChatHistoryRef.current?.scrollIntoView({ behavior: 'smooth' });
+    endOfChatHistoryRef.current?.scrollIntoView({ behavior: 'auto' });
   };
   const formContainerRef = useRef(null);
   const handleTextAreaInput = e => {
@@ -65,30 +65,42 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
 
   const handleQandAAction = async e => {
     e.preventDefault(); // Prevent page reload on form submit
+    if (!question) return; // Prevent sending empty questions
+
     console.log('Model used for QandA: ', selectedModel);
-    console.log('Question: ', question); // You can now use the question value
-    // clear the answer
-    setAnswer('');
-    setAnswering(true);
+    console.log('Question: ', question);
+
+    // Don't clear the question here, so it remains visible during the process
+    setAnswering(true); // Indicate that the answer process has started
+
     const chain =
       taskType === 'qanda' || taskType === 'docs'
         ? talkToDocument(selectedModel, vectorstore.vectorstore, { question, chat_history })
         : chatWithLLM(selectedModel, { question, chat_history });
-    let completeAnswer = ''; // Initialize a variable to hold the full answer
+
     for await (const chunk of chain) {
       if (chunk) {
-        completeAnswer += chunk;
         setAnswer(prevAnswer => prevAnswer + chunk);
+        // Here, update the chat history with the incremental answer.
+        setChatHistory(prevChatHistory => {
+          // If the last chat history item is the current question, update it.
+          // Otherwise, add a new entry.
+          const historyUpdated = [...prevChatHistory];
+          const lastEntry = historyUpdated[historyUpdated.length - 1];
+          if (lastEntry && lastEntry.question === question) {
+            lastEntry.answer += chunk;
+          } else {
+            historyUpdated.push({ question, answer: chunk });
+          }
+          return historyUpdated;
+        });
       }
-      // {"question": "", "answer": ""} is chat history
-      // need to add chat_history_current to chat_history
     }
-    if (completeAnswer) {
-      // Only update chat history if there is an answer
-      setChatHistory(prevChatHistory => [...prevChatHistory, { question, answer: completeAnswer }]);
-      setQuestion(''); // Reset question input after submitting
-      setAnswering(false);
-    }
+
+    // After the final chunk has been received, stop the answering indicator
+    setAnswering(false);
+    // If you want to clear the question after the answer is fully received, uncomment the next line.
+    setQuestion('');
   };
 
   useEffect(() => {
