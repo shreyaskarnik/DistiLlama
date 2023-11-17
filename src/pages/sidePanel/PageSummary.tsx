@@ -8,14 +8,16 @@ export default function PageSummary({ loading, summary, taskType }) {
     <div>
       {/* while loading show LinearProgress  */}
       {loading ? (
-        <div>
+        <div className="form-container">
           <span>Generating summary...</span>
           <LinearProgress color="primary" />
         </div>
       ) : summary ? (
         <div>
           <div className="content-box">{summary.text}</div>
-          <PageMetadata metadata={summary} taskType={taskType} />
+          <div className="form-container">
+            <PageMetadata metadata={summary} taskType={taskType} />
+          </div>
         </div>
       ) : null}
     </div>
