@@ -6,7 +6,7 @@ import PageMetadata from '@root/src/pages/sidePanel/PageMetadata';
 /* eslint-disable react/prop-types */
 export function QandAStatus({ embedding, vectorstore }) {
   return (
-    <div>
+    <div className="form-container">
       {/* while embedding==true show LinearProgress moving else show LinearProgress Solid */}
       {embedding && vectorstore === null ? (
         <div>
@@ -140,12 +140,10 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
               className={`real-button ${question ? 'has-text' : ''}`}
               disabled={answering} // this will disable the button when answering is true
             >
-              <BsFillArrowRightSquareFill size="2rem" />
+              <BsFillArrowRightSquareFill size="2rem" className={answering ? 'spin' : ''} />
             </button>
           </div>
         </form>
-        {/* <PageMetadata metadata={vectorstore} taskType={taskType} formContainerHeight={formContainerHeight} /> */}
-        <AnsweringStatus answering={answering} />
         <PageMetadata metadata={vectorstore} taskType={taskType} />
       </div>
     </div>

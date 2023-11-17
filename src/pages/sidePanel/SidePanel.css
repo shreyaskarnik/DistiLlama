@@ -365,7 +365,7 @@
   /* Take the full width of the viewport */
   background: #282c34;
   /* Match the background of the .App */
-  padding: 20px;
+  /* padding: 20px; */
   /* Add some padding around the form */
 }
 
@@ -430,11 +430,6 @@
   font-size: 0.9em;
   /* Adjust base font size as necessary */
   z-index: 10;
-}
-
-.page-metadata-summary {
-  position: fixed;
-  padding: 10px;
 }
 
 .metadata-content {
@@ -534,4 +529,18 @@
   padding: 5px !important;
   border-radius: 4px !important;
   overflow-x: auto !important;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 2s linear infinite;
 }
