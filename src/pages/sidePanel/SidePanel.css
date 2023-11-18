@@ -544,3 +544,14 @@
 .spin {
   animation: spin 2s linear infinite;
 }
+
+.summary-title {
+  color: #61dafb;
+  /* Or any color that fits your design */
+  margin: 20px 0;
+  /* Adjust margin as needed */
+  font-size: calc(10px + 2vmin);
+  /* Adjust font size as needed */
+  text-align: center;
+  /* If you want to center the title */
+}

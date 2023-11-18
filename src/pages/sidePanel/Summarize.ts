@@ -5,6 +5,7 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OLLAMA_BASE_URL } from '@src/pages/sidePanel/QandA';
 
 export type SummarizationResponse = {
+  title?: string;
   text: string;
   pageURL: string;
   tabID?: number;
@@ -33,6 +34,7 @@ async function summarizeCurrentPage(selectedModel) {
       input_documents: docs,
     });
     return {
+      title: pageContent.title,
       text: response.text,
       pageURL: pageContent.pageURL,
       tabID: pageContent.tabID,

@@ -27,7 +27,7 @@ export type ConversationalRetrievalQAChainInput = {
 async function setupVectorstore(selectedModel) {
   console.log('Setting up vectorstore', selectedModel);
   const embeddings = new HuggingFaceTransformersEmbeddings({
-    modelName: 'Supabase/gte-small',
+    modelName: 'Xenova/jina-embeddings-v2-small-en',
   });
   const voyClient = new VoyClient();
   return new VoyVectorStore(voyClient, embeddings);
@@ -49,6 +49,16 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
     documents.push(
       new Document({
         pageContent: pageContent.textContent,
+        metadata: {
+          pageURL: pageContent.pageURL,
+          title: pageContent.title,
+          length: pageContent.length,
+          excerpt: pageContent.excerpt,
+          byline: pageContent.byline,
+          dir: pageContent.dir,
+          siteName: pageContent.siteName,
+          lang: pageContent.lang,
+        },
       }),
     );
   } else {
@@ -77,8 +87,6 @@ export async function* talkToDocument(selectedModel, vectorStore, input: Convers
   console.log('chat_history', input.chat_history);
   console.log('vectorStore', vectorStore);
   const retriever = vectorStore.asRetriever();
-  const context = retriever.pipe(formatDocumentsAsString);
-  console.log('context', context);
   const condenseQuestionTemplate = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
   Chat History:
@@ -91,7 +99,14 @@ export async function* talkToDocument(selectedModel, vectorStore, input: Convers
   Do not use any other sources of information.
   Do not provide any answer that is not based on the context.
   If there is no answer, type "Not sure based on the context".
+  Additionally you will be given metadata like
+  title,content,length,excerpt,byline,dir,siteName,lang
+  in the metadata field. Use this information to help you answer the question.
+
   {context}
+
+  Metadata:
+  {metadata}
 
   Question: {question}
   Answer:
@@ -109,6 +124,7 @@ export async function* talkToDocument(selectedModel, vectorStore, input: Convers
     {
       context: retriever.pipe(formatDocumentsAsString),
       question: new RunnablePassthrough(),
+      metadata: retriever.pipe(documents => getMetadataString(documents[0].metadata)),
     },
     prompt,
     llm,
@@ -120,6 +136,20 @@ export async function* talkToDocument(selectedModel, vectorStore, input: Convers
   for await (const chunk of stream) {
     yield chunk;
   }
+}
+
+function getMetadataString(metadata) {
+  const result = [];
+
+  for (const key in metadata) {
+    // Check if the property is not an object and not an array
+    if (Object.prototype.hasOwnProperty.call(metadata, key) && typeof metadata[key] !== 'object') {
+      result.push(`${key}: ${metadata[key]}`);
+    }
+  }
+  console.log('result', result);
+
+  return result.join(' ');
 }
 
 export const formatChatHistory = (chatHistory: { question: string; answer: string }[]) => {
@@ -174,7 +204,7 @@ export async function* chatWithLLM(selectedModel, input: ConversationalRetrieval
   const llm = new ChatOllama({
     baseUrl: OLLAMA_BASE_URL,
     model: selectedModel,
-    temperature: 0,
+    temperature: 0.3,
   });
   const chatPrompt = ChatPromptTemplate.fromMessages([
     [
@@ -207,7 +237,6 @@ export async function* chatWithLLM(selectedModel, input: ConversationalRetrieval
   });
 
   for await (const chunk of stream) {
-    console.log('chunk', chunk);
     yield chunk.response;
   }
 }
