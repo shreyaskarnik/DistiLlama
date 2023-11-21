@@ -29,7 +29,7 @@ export function AnsweringStatus({ answering }) {
   );
 }
 
-export function QandABubble({ taskType, selectedModel, vectorstore }) {
+export function QandABubble({ taskType, selectedParams, vectorstore }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
@@ -67,7 +67,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
     e.preventDefault(); // Prevent page reload on form submit
     if (!question) return; // Prevent sending empty questions
 
-    console.log('Model used for QandA: ', selectedModel);
+    console.log('Params used for QandA: ', selectedParams);
     console.log('Question: ', question);
 
     // Don't clear the question here, so it remains visible during the process
@@ -75,8 +75,8 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
 
     const chain =
       taskType === 'qanda' || taskType === 'docs'
-        ? talkToDocument(selectedModel, vectorstore.vectorstore, { question, chat_history })
-        : chatWithLLM(selectedModel, { question, chat_history });
+        ? talkToDocument(selectedParams, vectorstore.vectorstore, { question, chat_history })
+        : chatWithLLM(selectedParams, { question, chat_history });
 
     for await (const chunk of chain) {
       if (chunk) {
@@ -106,7 +106,7 @@ export function QandABubble({ taskType, selectedModel, vectorstore }) {
   useEffect(() => {
     // Clear the answer when a new model is selected
     setAnswer('');
-  }, [selectedModel]);
+  }, [selectedParams]);
 
   return (
     <div>

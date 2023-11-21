@@ -2,7 +2,7 @@ import '@pages/sidePanel/SidePanel.css';
 import { getModels } from '@pages/utils/processing';
 import Header from '@root/src/pages/common/Header';
 import ChatWithDocument from '@root/src/pages/sidePanel/ChatWithDocument';
-import ModelDropDown from '@root/src/pages/sidePanel/Models';
+import Settings from '@root/src/pages/sidePanel/Settings';
 import PageSummary from '@root/src/pages/sidePanel/PageSummary';
 import { embedDocs } from '@root/src/pages/sidePanel/QandA';
 import { QandABubble, QandAStatus } from '@root/src/pages/sidePanel/QandABubble';
@@ -16,21 +16,27 @@ import Instructions from './Instructions';
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(null);
-  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedParams, setSelectedParams] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [embedding, setEmbedding] = useState(false);
   const [vectorstore, setVectorStore] = useState(null);
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const [readyToChat, setReadyToChat] = useState(false);
   const [serverRunning, setServerRunning] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettingsVisibility = () => {
+    setShowSettings(!showSettings);
+  };
   const resetTaskStates = () => {
     setVectorStore(null);
   };
   const fetchModels = async () => {
     try {
       const fetchedModels = await getModels();
-      if (!selectedModel) {
-        setSelectedModel(fetchedModels[0]);
+      console.log('fetchedModels', fetchedModels);
+      if (!selectedParams) {
+        setSelectedParams({ model: fetchedModels[0], temperature: 0.3 });
         setServerRunning(true);
       }
     } catch (error) {
@@ -51,47 +57,59 @@ const SidePanel = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSummarizeAction = async () => {
-    console.log('Model used for summary: ', selectedModel);
+    console.log('Model used for summary: ', selectedParams);
     setLoading(true);
-    const response = await summarizeCurrentPage(selectedModel);
+    const response = await summarizeCurrentPage(selectedParams);
     setSummary(response);
     setLoading(false);
   };
   const handleChatAction = async () => {
-    console.log('Model used for chat: ', selectedModel);
+    console.log('Model used for chat: ', selectedParams);
     setReadyToChat(true);
   };
   const handleQandAAction = async () => {
     setEmbedding(true);
-    console.log('Model used for QandA: ', selectedModel);
-    const response = await embedDocs(selectedModel, selectedPDF);
+    console.log('Model used for QandA: ', selectedParams);
+    const response = await embedDocs(selectedParams, selectedPDF);
     setVectorStore(response);
     setEmbedding(false);
   };
   return (
     <div className="App">
+      <header>
+        <Header
+          onBack={() => setSelectedOption(null)}
+          onRefresh={() => {
+            setEmbedding(false);
+            setSelectedOption(null);
+            setVectorStore(null);
+          }}
+          onOpenSettings={toggleSettingsVisibility}
+        />
+        {showSettings && <Settings onParamChange={setSelectedParams} />}
+      </header>
       {selectedOption === null && (
         <div className="App-content">
           {!serverRunning ? (
             <Instructions />
           ) : (
             <div>
-              <span className="select-header">Select an option</span>
+              <span className="select-header">Select Task</span>
               <div className="tile-container">
                 <div className="tile">
-                  <TbBrandWechat onClick={() => setSelectedOption('chat')} />
+                  <TbBrandWechat onClick={() => setSelectedOption('chat')} title="Chat with LLM" />
                   <span className="tile-label">Chat with LLM</span>
                 </div>
                 <div className="tile">
-                  <TfiWrite onClick={() => setSelectedOption('summary')} />
+                  <TfiWrite onClick={() => setSelectedOption('summary')} title="Summarize Current Page" />
                   <span className="tile-label">Summarize Current Page</span>
                 </div>
                 <div className="tile">
-                  <TbMessageQuestion onClick={() => setSelectedOption('qanda')} />
+                  <TbMessageQuestion onClick={() => setSelectedOption('qanda')} title="Chat with Current Page" />
                   <span className="tile-label">Chat with Current Page</span>
                 </div>
                 <div className="tile">
-                  <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} />
+                  <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} title="Chat with Docs" />
                   <span className="tile-label">Chat with Docs</span>
                 </div>
               </div>
@@ -102,19 +120,10 @@ const SidePanel = () => {
 
       {selectedOption === 'summary' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setSummary(null);
-                setSelectedOption(null);
-              }}
-            />
-          </header>
           {!loading && !summary && (
             <div className="App-content">
               <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
+                <Settings onParamChange={setSelectedParams} />
                 <button className="real-button" onClick={handleSummarizeAction}>
                   Summarize
                 </button>
@@ -127,21 +136,11 @@ const SidePanel = () => {
 
       {selectedOption === 'qanda' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setEmbedding(false);
-                setSelectedOption(null);
-                setVectorStore(null);
-              }}
-            />
-            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
-          </header>
+          <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           {!embedding && !vectorstore && (
             <div className="App-content">
               <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
+                <Settings onParamChange={setSelectedParams} />
                 <button className="real-button" onClick={handleQandAAction}>
                   Load current document
                 </button>
@@ -149,53 +148,32 @@ const SidePanel = () => {
             </div>
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
           ) : null}
         </div>
       )}
       {selectedOption === 'docs' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setEmbedding(false);
-                setSelectedOption(null);
-                setVectorStore(null);
-              }}
-            />
-            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
-          </header>
+          <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           {!embedding && !vectorstore && (
             <ChatWithDocument
               handleQandAAction={handleQandAAction}
-              setSelectedModel={setSelectedModel}
+              setSelectedParams={setSelectedParams}
               setSelectedPDF={setSelectedPDF}
             />
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
           ) : null}
         </div>
       )}
       {selectedOption === 'chat' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setEmbedding(false);
-                setSelectedOption(null);
-                setVectorStore(null);
-                setReadyToChat(false);
-              }}
-            />
-            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
-          </header>
+          <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           {!readyToChat && (
             <div className="App-content">
               <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
+                <Settings onParamChange={setSelectedParams} />
                 <button className="real-button" onClick={handleChatAction}>
                   Chat
                 </button>
@@ -203,7 +181,7 @@ const SidePanel = () => {
             </div>
           )}
           {readyToChat && (
-            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
           )}
         </div>
       )}
