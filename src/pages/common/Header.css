@@ -12,7 +12,7 @@
     color: #FFF;
     /* White text */
     width: 100%;
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     z-index: 1000;
     opacity: 0.7;
@@ -41,4 +41,15 @@
 .button svg {
     width: 24px;
     height: 24px;
+}
+
+.center-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.button.disabled {
+    cursor: default;
+    opacity: 0.5;
 }

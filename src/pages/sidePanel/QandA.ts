@@ -77,11 +77,12 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
     : ({ vectorstore, fileName: localFile.name } as EmbedDocsOutput);
 }
 
-export async function* talkToDocument(selectedModel, vectorStore, input: ConversationalRetrievalQAChainInput) {
+export async function* talkToDocument(selectedParams, vectorStore, input: ConversationalRetrievalQAChainInput) {
+  console.log('talkToDocument', selectedParams);
   const llm = new Ollama({
     baseUrl: OLLAMA_BASE_URL,
-    model: selectedModel,
-    temperature: 0.1,
+    model: selectedParams.model.name,
+    temperature: selectedParams.temperature,
   });
   console.log('question', input.question);
   console.log('chat_history', input.chat_history);
@@ -200,11 +201,12 @@ export async function handlePDFFile(selectedFile) {
   return documents;
 }
 
-export async function* chatWithLLM(selectedModel, input: ConversationalRetrievalQAChainInput) {
+export async function* chatWithLLM(selectedParams, input: ConversationalRetrievalQAChainInput) {
+  console.log('chatWithLLM', selectedParams);
   const llm = new ChatOllama({
     baseUrl: OLLAMA_BASE_URL,
-    model: selectedModel,
-    temperature: 0.3,
+    model: selectedParams.model.name,
+    temperature: selectedParams.temperature,
   });
   const chatPrompt = ChatPromptTemplate.fromMessages([
     [
