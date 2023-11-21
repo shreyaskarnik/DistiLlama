@@ -1,42 +1,74 @@
-import { getModels } from '@src/pages/utils/processing';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
+import { getModels } from '@src/pages/utils/processing';
 
 const DEFAULT_TEMPERATURE = 0.3;
+// Define a default model if necessary, or use null/undefined
+const DEFAULT_MODEL = null;
+
 // Helper function to convert bytes to GB
 const bytesToGB = bytes => (bytes / 1024 ** 3).toFixed(2);
 
 /* eslint-disable react/prop-types */
 const Settings = ({ onParamChange }) => {
-  console.log('Settings.tsx: onParamChange', onParamChange);
   const [models, setModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [temperatureValue, setTemperatureValue] = useState(0.2); // Default value in the middle of the range
+  const [temperatureValue, setTemperatureValue] = useState(DEFAULT_TEMPERATURE);
 
+  // Function to update Chrome storage
+  const updateStorage = (newModel, newTemperature) => {
+    chrome.storage.local.set({ model: newModel, temperature: newTemperature });
+  };
+
+  // Fetch models and set from storage or defaults
   useEffect(() => {
-    const fetchModels = async () => {
+    let isMounted = true; // To handle component unmount
+
+    const fetchAndSetModels = async () => {
       try {
         setIsLoading(true);
         const fetchedModels = await getModels();
-        setModels(fetchedModels);
-        setSelectedModel(fetchedModels[0]);
-        // Call the onParamChange with the initial model and default temperature
-        onParamChange({ model: fetchedModels[0], temperature: DEFAULT_TEMPERATURE });
+        if (isMounted) {
+          setModels(fetchedModels);
+          chrome.storage.local.get(['model', 'temperature'], result => {
+            if (result.model) {
+              const storedModel = fetchedModels.find(m => m.name === result.model.name);
+              setSelectedModel(storedModel || fetchedModels[0]);
+            } else {
+              setSelectedModel(fetchedModels[0]);
+            }
+
+            if (result.temperature) {
+              setTemperatureValue(result.temperature);
+            } else {
+              setTemperatureValue(DEFAULT_TEMPERATURE);
+            }
+          });
+        }
       } catch (err) {
-        setError(err.message);
+        if (isMounted) {
+          setError(err.message);
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
-    fetchModels();
-  }, []); // Empty array means this effect only runs once on mount
+    fetchAndSetModels();
+
+    return () => {
+      isMounted = false;
+    }; // Cleanup function for unmount
+  }, []);
 
   useEffect(() => {
-    if (selectedModel) {
+    if (selectedModel && temperatureValue !== null) {
       onParamChange({ model: selectedModel, temperature: temperatureValue });
+      updateStorage(selectedModel, temperatureValue);
     }
   }, [selectedModel, temperatureValue, onParamChange]);
 
@@ -55,7 +87,9 @@ const Settings = ({ onParamChange }) => {
         <select
           className="model-dropdown"
           value={selectedModel?.name}
-          onChange={e => setSelectedModel(models.find(model => model.name === e.target.value))}>
+          onChange={e => setSelectedModel(models.find(model => model.name === e.target.value))}
+          disabled={!models.length} // Disable dropdown if models are not loaded yet
+        >
           {models.map(model => (
             <option key={model.name} value={model.name}>
               {model.name}
@@ -69,7 +103,7 @@ const Settings = ({ onParamChange }) => {
               <div>Modified: {moment(selectedModel.modified_at).fromNow()}</div>
             </div>
             <div className="slider-container">
-              Temperature
+              <span>Temperature</span>
               <div className="slider-description">
                 Low temperature values will generate more predictable responses while higher values will generate more
                 creative responses.

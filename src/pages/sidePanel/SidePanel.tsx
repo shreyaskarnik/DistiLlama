@@ -23,6 +23,11 @@ const SidePanel = () => {
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const [readyToChat, setReadyToChat] = useState(false);
   const [serverRunning, setServerRunning] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettingsVisibility = () => {
+    setShowSettings(!showSettings);
+  };
   const resetTaskStates = () => {
     setVectorStore(null);
   };
@@ -71,28 +76,40 @@ const SidePanel = () => {
   };
   return (
     <div className="App">
+      <header>
+        <Header
+          onBack={() => setSelectedOption(null)}
+          onRefresh={() => {
+            setEmbedding(false);
+            setSelectedOption(null);
+            setVectorStore(null);
+          }}
+          onOpenSettings={toggleSettingsVisibility}
+        />
+        {showSettings && <Settings onParamChange={setSelectedParams} />}
+      </header>
       {selectedOption === null && (
         <div className="App-content">
           {!serverRunning ? (
             <Instructions />
           ) : (
             <div>
-              <span className="select-header">Select an option</span>
+              <span className="select-header">Select Task</span>
               <div className="tile-container">
                 <div className="tile">
-                  <TbBrandWechat onClick={() => setSelectedOption('chat')} />
+                  <TbBrandWechat onClick={() => setSelectedOption('chat')} title="Chat with LLM" />
                   <span className="tile-label">Chat with LLM</span>
                 </div>
                 <div className="tile">
-                  <TfiWrite onClick={() => setSelectedOption('summary')} />
+                  <TfiWrite onClick={() => setSelectedOption('summary')} title="Summarize Current Page" />
                   <span className="tile-label">Summarize Current Page</span>
                 </div>
                 <div className="tile">
-                  <TbMessageQuestion onClick={() => setSelectedOption('qanda')} />
+                  <TbMessageQuestion onClick={() => setSelectedOption('qanda')} title="Chat with Current Page" />
                   <span className="tile-label">Chat with Current Page</span>
                 </div>
                 <div className="tile">
-                  <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} />
+                  <HiOutlineDocumentChartBar onClick={() => setSelectedOption('docs')} title="Chat with Docs" />
                   <span className="tile-label">Chat with Docs</span>
                 </div>
               </div>
@@ -103,15 +120,6 @@ const SidePanel = () => {
 
       {selectedOption === 'summary' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setSummary(null);
-                setSelectedOption(null);
-              }}
-            />
-          </header>
           {!loading && !summary && (
             <div className="App-content">
               <div className="action">
@@ -128,17 +136,7 @@ const SidePanel = () => {
 
       {selectedOption === 'qanda' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setEmbedding(false);
-                setSelectedOption(null);
-                setVectorStore(null);
-              }}
-            />
-            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
-          </header>
+          <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           {!embedding && !vectorstore && (
             <div className="App-content">
               <div className="action">
@@ -156,17 +154,7 @@ const SidePanel = () => {
       )}
       {selectedOption === 'docs' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setEmbedding(false);
-                setSelectedOption(null);
-                setVectorStore(null);
-              }}
-            />
-            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
-          </header>
+          <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           {!embedding && !vectorstore && (
             <ChatWithDocument
               handleQandAAction={handleQandAAction}
@@ -181,18 +169,7 @@ const SidePanel = () => {
       )}
       {selectedOption === 'chat' && (
         <div>
-          <header>
-            <Header
-              onBack={() => setSelectedOption(null)}
-              onRefresh={() => {
-                setEmbedding(false);
-                setSelectedOption(null);
-                setVectorStore(null);
-                setReadyToChat(false);
-              }}
-            />
-            <QandAStatus embedding={embedding} vectorstore={vectorstore} />
-          </header>
+          <QandAStatus embedding={embedding} vectorstore={vectorstore} />
           {!readyToChat && (
             <div className="App-content">
               <div className="action">

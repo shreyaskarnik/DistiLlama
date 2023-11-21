@@ -154,7 +154,7 @@
 }
 
 .select-header {
-  margin-top: auto;
+  margin-top: 70px;
   margin-bottom: 150px;
   font-weight: bold;
   font-size: calc(10px + 2vmin);
@@ -565,6 +565,8 @@
   max-width: 300px;
   /* Set a max-width as per your design */
   margin: auto;
+  margin-top: 70px;
+  /* padding: 70px; */
 }
 
 .model-container {

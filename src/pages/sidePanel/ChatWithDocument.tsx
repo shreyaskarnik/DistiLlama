@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
-import Settings from '@root/src/pages/sidePanel/Settings';
+import Settings from '@pages/sidePanel/Settings';
 
 // eslint-disable-next-line react/prop-types
 const ChatWithDocument = ({ handleQandAAction, setSelectedParams, setSelectedPDF }) => {
