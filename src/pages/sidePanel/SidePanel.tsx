@@ -2,7 +2,7 @@ import '@pages/sidePanel/SidePanel.css';
 import { getModels } from '@pages/utils/processing';
 import Header from '@root/src/pages/common/Header';
 import ChatWithDocument from '@root/src/pages/sidePanel/ChatWithDocument';
-import ModelDropDown from '@root/src/pages/sidePanel/Models';
+import Settings from '@root/src/pages/sidePanel/Settings';
 import PageSummary from '@root/src/pages/sidePanel/PageSummary';
 import { embedDocs } from '@root/src/pages/sidePanel/QandA';
 import { QandABubble, QandAStatus } from '@root/src/pages/sidePanel/QandABubble';
@@ -16,7 +16,7 @@ import Instructions from './Instructions';
 const SidePanel = () => {
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(null);
-  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedParams, setSelectedParams] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [embedding, setEmbedding] = useState(false);
   const [vectorstore, setVectorStore] = useState(null);
@@ -29,8 +29,9 @@ const SidePanel = () => {
   const fetchModels = async () => {
     try {
       const fetchedModels = await getModels();
-      if (!selectedModel) {
-        setSelectedModel(fetchedModels[0]);
+      console.log('fetchedModels', fetchedModels);
+      if (!selectedParams) {
+        setSelectedParams({ model: fetchedModels[0], temperature: 0.3 });
         setServerRunning(true);
       }
     } catch (error) {
@@ -51,20 +52,20 @@ const SidePanel = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSummarizeAction = async () => {
-    console.log('Model used for summary: ', selectedModel);
+    console.log('Model used for summary: ', selectedParams);
     setLoading(true);
-    const response = await summarizeCurrentPage(selectedModel);
+    const response = await summarizeCurrentPage(selectedParams);
     setSummary(response);
     setLoading(false);
   };
   const handleChatAction = async () => {
-    console.log('Model used for chat: ', selectedModel);
+    console.log('Model used for chat: ', selectedParams);
     setReadyToChat(true);
   };
   const handleQandAAction = async () => {
     setEmbedding(true);
-    console.log('Model used for QandA: ', selectedModel);
-    const response = await embedDocs(selectedModel, selectedPDF);
+    console.log('Model used for QandA: ', selectedParams);
+    const response = await embedDocs(selectedParams, selectedPDF);
     setVectorStore(response);
     setEmbedding(false);
   };
@@ -114,7 +115,7 @@ const SidePanel = () => {
           {!loading && !summary && (
             <div className="App-content">
               <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
+                <Settings onParamChange={setSelectedParams} />
                 <button className="real-button" onClick={handleSummarizeAction}>
                   Summarize
                 </button>
@@ -141,7 +142,7 @@ const SidePanel = () => {
           {!embedding && !vectorstore && (
             <div className="App-content">
               <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
+                <Settings onParamChange={setSelectedParams} />
                 <button className="real-button" onClick={handleQandAAction}>
                   Load current document
                 </button>
@@ -149,7 +150,7 @@ const SidePanel = () => {
             </div>
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
           ) : null}
         </div>
       )}
@@ -169,12 +170,12 @@ const SidePanel = () => {
           {!embedding && !vectorstore && (
             <ChatWithDocument
               handleQandAAction={handleQandAAction}
-              setSelectedModel={setSelectedModel}
+              setSelectedParams={setSelectedParams}
               setSelectedPDF={setSelectedPDF}
             />
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
           ) : null}
         </div>
       )}
@@ -195,7 +196,7 @@ const SidePanel = () => {
           {!readyToChat && (
             <div className="App-content">
               <div className="action">
-                <ModelDropDown onModelChange={setSelectedModel} />
+                <Settings onParamChange={setSelectedParams} />
                 <button className="real-button" onClick={handleChatAction}>
                   Chat
                 </button>
@@ -203,7 +204,7 @@ const SidePanel = () => {
             </div>
           )}
           {readyToChat && (
-            <QandABubble taskType={selectedOption} selectedModel={selectedModel} vectorstore={vectorstore} />
+            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
           )}
         </div>
       )}

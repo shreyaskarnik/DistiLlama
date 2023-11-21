@@ -555,3 +555,86 @@
   text-align: center;
   /* If you want to center the title */
 }
+
+.settings-container {
+  /* background-color: #282c34; */
+  /* Dark background */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  /* Set a max-width as per your design */
+  margin: auto;
+}
+
+.model-container {
+  margin-bottom: 20px;
+}
+
+.model-select-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.model-dropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.model-info {
+  text-align: left;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.slider-container {
+  margin-bottom: 20px;
+}
+
+.slider-label {
+  font-weight: bold;
+}
+
+.slider-description {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.slider {
+  width: 100%;
+  height: 2px;
+  /* Slider line thickness */
+  background: #61dafb;
+  /* Slider line color */
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  /* Slider handle width */
+  height: 20px;
+  /* Slider handle height */
+  background: #61dafb;
+  /* Slider handle color */
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #61dafb;
+  cursor: pointer;
+}
+
+.slider-metrics {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}

@@ -11,16 +11,16 @@ export type SummarizationResponse = {
   tabID?: number;
 };
 
-async function summarizeCurrentPage(selectedModel) {
-  console.log('Inside summarizeCurrentPage with model: ', selectedModel);
+async function summarizeCurrentPage(selectedParams) {
+  console.log('Inside summarizeCurrentPage with model: ', selectedParams);
   try {
     const pageContent = await getPageContent();
     if (!pageContent) return;
 
     const llm = new ChatOllama({
       baseUrl: OLLAMA_BASE_URL, // change if you are using a different endpoint
-      temperature: 0.3, // change if you want to experiment with different temperatures
-      model: selectedModel, // change if you want to use a different model
+      temperature: selectedParams.temperature,
+      model: selectedParams.model.name,
     });
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 2000,

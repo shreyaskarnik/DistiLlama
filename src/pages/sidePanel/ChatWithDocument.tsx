@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
-import ModelDropDown from '@root/src/pages/sidePanel/Models';
+import Settings from '@root/src/pages/sidePanel/Settings';
 
 // eslint-disable-next-line react/prop-types
-const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF }) => {
+const ChatWithDocument = ({ handleQandAAction, setSelectedParams, setSelectedPDF }) => {
   const [selectedFileName, setSelectedFileName] = useState('');
 
   const handleFileChange = useCallback(
@@ -20,7 +20,7 @@ const ChatWithDocument = ({ handleQandAAction, setSelectedModel, setSelectedPDF 
   return (
     <div className="App-content">
       <div className="action">
-        <ModelDropDown onModelChange={setSelectedModel} />
+        <Settings onParamChange={setSelectedParams} />
         <div className="form-container">
           <form onSubmit={handleQandAAction} className="qna-form">
             <div className="input-button-wrapper">
