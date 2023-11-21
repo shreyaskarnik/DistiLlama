@@ -7,7 +7,7 @@ const DEFAULT_TEMPERATURE = 0.3;
 const DEFAULT_MODEL = null;
 
 // Helper function to convert bytes to GB
-const bytesToGB = bytes => (bytes / 1024 ** 3).toFixed(2);
+const bytesToGB = bytes => (bytes / 1e9).toFixed(2);
 
 /* eslint-disable react/prop-types */
 const Settings = ({ onParamChange }) => {
