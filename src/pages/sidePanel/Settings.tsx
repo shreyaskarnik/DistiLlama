@@ -16,10 +16,22 @@ const Settings = ({ onParamChange }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [temperatureValue, setTemperatureValue] = useState(DEFAULT_TEMPERATURE);
+  const [isDefaultSet, setIsDefaultSet] = useState(false);
 
   // Function to update Chrome storage
   const updateStorage = (newModel, newTemperature) => {
     chrome.storage.local.set({ model: newModel, temperature: newTemperature });
+  };
+  const saveAsDefault = () => {
+    onParamChange({ model: selectedModel, temperature: temperatureValue });
+
+    // Save as default in Chrome storage
+    chrome.storage.local.set({
+      defaultModel: selectedModel.name,
+      defaultTemperature: temperatureValue,
+      isDefaultSet: true, // Flag to indicate default settings are saved
+    });
+    setIsDefaultSet(true);
   };
 
   // Fetch models and set from storage or defaults
@@ -32,18 +44,25 @@ const Settings = ({ onParamChange }) => {
         const fetchedModels = await getModels();
         if (isMounted) {
           setModels(fetchedModels);
-          chrome.storage.local.get(['model', 'temperature'], result => {
+          chrome.storage.local.get(['model', 'temperature', 'isDefaultSet'], result => {
+            if (result.isDefaultSet) {
+              setIsDefaultSet(true);
+            }
             if (result.model) {
               const storedModel = fetchedModels.find(m => m.name === result.model.name);
               setSelectedModel(storedModel || fetchedModels[0]);
+              setIsDefaultSet(result.isDefaultSet);
             } else {
               setSelectedModel(fetchedModels[0]);
+              setIsDefaultSet(false);
             }
 
             if (result.temperature) {
               setTemperatureValue(result.temperature);
+              setIsDefaultSet(result.isDefaultSet);
             } else {
               setTemperatureValue(DEFAULT_TEMPERATURE);
+              setIsDefaultSet(false);
             }
           });
         }
@@ -78,6 +97,12 @@ const Settings = ({ onParamChange }) => {
 
   if (error) {
     return <div>Error fetching models: {error}</div>;
+  }
+  if (isDefaultSet) {
+    // Render a message or a different UI component
+    return (
+      <div className="settings-container">Using default settings click on the gear icon in the header to change</div>
+    );
   }
 
   return (
@@ -126,6 +151,9 @@ const Settings = ({ onParamChange }) => {
           </div>
         )}
       </div>
+      <button className="save-default-button" onClick={saveAsDefault}>
+        Save as Default
+      </button>
     </div>
   );
 };

@@ -26,10 +26,15 @@ const SidePanel = () => {
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettingsVisibility = () => {
+    chrome.storage.local.set({ isDefaultSet: false });
     setShowSettings(!showSettings);
   };
   const resetTaskStates = () => {
     setVectorStore(null);
+    setSummary(null);
+    setSelectedOption(null);
+    setSelectedPDF(null);
+    setLoading(false);
   };
   const fetchModels = async () => {
     try {
@@ -80,9 +85,7 @@ const SidePanel = () => {
         <Header
           onBack={() => setSelectedOption(null)}
           onRefresh={() => {
-            setEmbedding(false);
-            setSelectedOption(null);
-            setVectorStore(null);
+            resetTaskStates();
           }}
           onOpenSettings={toggleSettingsVisibility}
         />
