@@ -145,7 +145,6 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
               onChange={e => setQuestion(e.target.value)}
               onKeyDown={handleKeyPress}
               className="question-input"
-              style={{ overflowY: 'hidden' }} // Prevent scrollbar
               disabled={answering}
             />
             <button
