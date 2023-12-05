@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^17.7.0",
+    "@commitlint/config-conventional": "^18.4.3",
     "@rollup/plugin-typescript": "^11.1.5",
     "@testing-library/react": "14.1.2",
     "@twind/core": "^1.1.3",
