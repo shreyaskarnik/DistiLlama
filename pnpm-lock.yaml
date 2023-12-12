@@ -33,8 +33,8 @@ dependencies:
     specifier: ^1.1.1
     version: 1.1.1
   pdfjs-dist:
-    specifier: ^4.0.189
-    version: 4.0.189
+    specifier: ^4.0.269
+    version: 4.0.269
   prop-types:
     specifier: ^15.8.1
     version: 15.8.1
@@ -7326,8 +7326,8 @@ packages:
       - supports-color
     dev: false
 
-  /pdfjs-dist@4.0.189:
-    resolution: {integrity: sha512-5IWbLRJjQJhk3cu3nNFAvIYoSzT8xRYlRkFCIV1tn7hK1eq9H+6vOP0ytJhZz9YI35IXlu33uQspvmYO6Oir4g==}
+  /pdfjs-dist@4.0.269:
+    resolution: {integrity: sha512-jjWO56tcOjnmPqDf8PmXDeZ781AGvpHMYI3HhNtaFKTRXXPaD1ArSrhVe38/XsrIQJ0onISCND/vuXaWJkiDWw==}
     engines: {node: '>=18'}
     optionalDependencies:
       canvas: 2.11.2
