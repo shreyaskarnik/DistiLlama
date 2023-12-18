@@ -30,7 +30,7 @@
     "@mui/material": "^5.14.20",
     "@xenova/transformers": "^2.9.0",
     "construct-style-sheets-polyfill": "^3.1.0",
-    "langchain": "^0.0.186",
+    "langchain": "^0.0.209",
     "moment": "^2.29.4",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^4.0.269",
