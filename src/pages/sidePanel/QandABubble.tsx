@@ -62,11 +62,11 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
   };
 
   useEffect(() => {
+    fetchStarterQuestions();
     setAnswer('');
     setQuestion('');
     setAnswering(false);
     setChatHistory([]);
-    fetchStarterQuestions();
   }, [vectorstore]);
   useEffect(() => {
     scrollToBottom();
@@ -155,12 +155,10 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
                   tabIndex={0}
                   onClick={() => {
                     setQuestion(question);
-                    handleQandAAction(question);
                   }}
                   onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       setQuestion(question);
-                      handleQandAAction(question);
                     }
                   }}>
                   {question}
