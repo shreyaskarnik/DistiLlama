@@ -1,5 +1,5 @@
 import LinearProgress from '@mui/material/LinearProgress';
-import { talkToDocument, chatWithLLM } from '@root/src/pages/sidePanel/QandA';
+import { talkToDocument, chatWithLLM, getDefaultStarterQuestions } from '@root/src/pages/sidePanel/QandA';
 import { useEffect, useRef, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 import PageMetadata from '@root/src/pages/sidePanel/PageMetadata';
@@ -45,6 +45,7 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
     e.target.style.height = 'auto'; // Reset the height
     e.target.style.height = `${e.target.scrollHeight}px`; // Set the height equal to the scroll height
   };
+  const [starterQuestions, setStarterQuestions] = useState([]);
   const handleKeyPress = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       // Check if Enter was pressed without the shift key
@@ -52,8 +53,16 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
       handleQandAAction(e); // Call your existing form submission handler
     }
   };
+  const fetchStarterQuestions = async () => {
+    console.log('getting default starter questions');
+    if (taskType === 'docs' || taskType === 'qanda') {
+      const defaultStarterQuestions = await getDefaultStarterQuestions(selectedParams, vectorstore.vectorstore);
+      setStarterQuestions(defaultStarterQuestions);
+    }
+  };
 
   useEffect(() => {
+    fetchStarterQuestions();
     setAnswer('');
     setQuestion('');
     setAnswering(false);
@@ -136,6 +145,28 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
         )}
       </div>
       <div className="form-container" ref={formContainerRef}>
+        {chat_history.length === 0 && (
+          <div className="starter-questions">
+            <ul>
+              {starterQuestions.map((question, index) => (
+                <li
+                  key={index}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setQuestion(question);
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      setQuestion(question);
+                    }
+                  }}>
+                  {question}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <form onSubmit={handleQandAAction} className="qna-form">
           <div className="input-button-wrapper">
             <textarea
@@ -147,11 +178,7 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
               className="question-input"
               disabled={answering}
             />
-            <button
-              type="submit"
-              className={`real-button ${question ? 'has-text' : ''}`}
-              disabled={answering} // this will disable the button when answering is true
-            >
+            <button type="submit" className={`real-button ${question ? 'has-text' : ''}`} disabled={answering}>
               <BsFillArrowRightSquareFill size="2rem" className={answering ? 'spin' : ''} />
             </button>
           </div>
