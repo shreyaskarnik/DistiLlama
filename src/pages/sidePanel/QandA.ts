@@ -12,6 +12,8 @@ import { RunnablePassthrough, RunnableSequence } from 'langchain/schema/runnable
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { formatDocumentsAsString } from 'langchain/util/document';
 import { VoyVectorStore } from 'langchain/vectorstores/voy';
+import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
+import { EmbeddingsFilter } from 'langchain/retrievers/document_compressors/embeddings_filter';
 import { type TextItem } from 'pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js';
 import * as PDFLib from 'pdfjs-dist';
 import { Voy as VoyClient } from 'voy-search';
@@ -37,6 +39,7 @@ export type EmbedDocsOutput = {
   pageURL?: string;
   tabID?: number;
   fileName?: string;
+  starterQuestions?: string[];
 };
 export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutput> {
   console.log('Embedding documents');
@@ -71,10 +74,51 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
   const splitDocs = await splitter.splitDocuments(documents);
   await vectorstore.addDocuments(splitDocs);
   console.log('Added documents to vectorstore');
-
   return pageContent
     ? ({ vectorstore, pageURL: pageContent.pageURL, tabID: pageContent.tabID } as EmbedDocsOutput)
     : ({ vectorstore, fileName: localFile.name } as EmbedDocsOutput);
+}
+
+export async function getDefaultStarterQuestions(selectedParams, vectorStore) {
+  try {
+    console.log('getDefaultStarterQuestions', selectedParams);
+    const llm = new Ollama({
+      baseUrl: OLLAMA_BASE_URL,
+      model: selectedParams.model.name,
+      temperature: selectedParams.temperature,
+    });
+    console.log('vectorStore', vectorStore);
+    const retriever = vectorStore.asRetriever();
+
+    const generateStarterQuestionsPrompt = `
+    Given the following context and metadata, generate 1-2 questions that can be asked about the context.
+    Return the questions as a list of strings. No additional output is needed. No numbers needed. Format output as JSON array of strings.
+
+    {context}
+
+    Metadata:
+    {metadata}
+    `;
+
+    const starterQPrompt = PromptTemplate.fromTemplate(generateStarterQuestionsPrompt);
+    const chain = RunnableSequence.from([
+      {
+        context: retriever.pipe(formatDocumentsAsString),
+        metadata: retriever.pipe(documents => getMetadataString(documents)),
+      },
+      starterQPrompt,
+      llm,
+      new StringOutputParser(),
+    ]);
+
+    const resultString = await chain.invoke('');
+    const resultArray = JSON.parse(resultString); // Parse the JSON string to an array
+    return resultArray;
+  } catch (error) {
+    console.error('Error in getDefaultStarterQuestions:', error);
+    // Handle the error or return an empty array/fallback value
+    return [];
+  }
 }
 
 export async function* talkToDocument(selectedParams, vectorStore, input: ConversationalRetrievalQAChainInput) {
@@ -87,7 +131,19 @@ export async function* talkToDocument(selectedParams, vectorStore, input: Conver
   console.log('question', input.question);
   console.log('chat_history', input.chat_history);
   console.log('vectorStore', vectorStore);
-  const retriever = vectorStore.asRetriever();
+  let retriever = vectorStore.asRetriever();
+  if (input.chat_history.length !== 0) {
+    const baseCompressor = new EmbeddingsFilter({
+      embeddings: new HuggingFaceTransformersEmbeddings({
+        modelName: 'Xenova/jina-embeddings-v2-small-en',
+      }),
+      similarityThreshold: 0.6,
+    });
+    retriever = new ContextualCompressionRetriever({
+      baseCompressor,
+      baseRetriever: vectorStore.asRetriever(),
+    });
+  }
   const condenseQuestionTemplate = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
   Chat History:
@@ -125,7 +181,7 @@ export async function* talkToDocument(selectedParams, vectorStore, input: Conver
     {
       context: retriever.pipe(formatDocumentsAsString),
       question: new RunnablePassthrough(),
-      metadata: retriever.pipe(documents => getMetadataString(documents[0].metadata)),
+      metadata: retriever.pipe(documents => getMetadataString(documents)),
     },
     prompt,
     llm,
@@ -139,18 +195,27 @@ export async function* talkToDocument(selectedParams, vectorStore, input: Conver
   }
 }
 
-function getMetadataString(metadata) {
-  const result = [];
-
-  for (const key in metadata) {
-    // Check if the property is not an object and not an array
-    if (Object.prototype.hasOwnProperty.call(metadata, key) && typeof metadata[key] !== 'object') {
-      result.push(`${key}: ${metadata[key]}`);
+function getMetadataString(documents: Document[]) {
+  try {
+    const metadata = documents[0].metadata;
+    if (!metadata) {
+      return '';
     }
-  }
-  console.log('result', result);
+    const result = [];
 
-  return result.join(' ');
+    for (const key in metadata) {
+      // Check if the property is not an object and not an array
+      if (Object.prototype.hasOwnProperty.call(metadata, key) && typeof metadata[key] !== 'object') {
+        result.push(`${key}: ${metadata[key]}`);
+      }
+    }
+    console.log('result', result);
+
+    return result.join(' ');
+  } catch (e) {
+    console.log('error', e);
+    return '';
+  }
 }
 
 export const formatChatHistory = (chatHistory: { question: string; answer: string }[]) => {

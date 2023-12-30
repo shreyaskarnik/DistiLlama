@@ -663,3 +663,87 @@
   background-color: #0056b3;
   /* Darker green */
 }
+
+.starter-questions {
+  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.starter-questions h3 {
+  color: #61dafb;
+  margin-bottom: 20px;
+}
+
+.starter-questions li {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.starter-questions li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.starter-questions li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* If you have a title or description under the list, you might add something like this: */
+.description-text {
+  color: white;
+  font-size: 1rem;
+  margin: 20px;
+  text-align: center;
+}
+
+/* Style for the input field and submit button */
+.input-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  /* To ensure the border-radius applies to children elements as well */
+}
+
+.input-container textarea {
+  width: calc(100% - 40px);
+  /* Adjust the width based on your padding */
+  padding: 20px;
+  border: none;
+  background: transparent;
+  color: white;
+  resize: none;
+  /* Disables resize handle */
+}
+
+.input-container button {
+  padding: 10px 15px;
+  border: none;
+  background: #61dafb;
+  /* Light blue to match the theme */
+  color: #282c34;
+  /* Dark text for contrast */
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background: #409ed2;
+  /* Slightly darker on hover */
+}
+
+/* You may need to adjust the max-width and padding based on your layout */
