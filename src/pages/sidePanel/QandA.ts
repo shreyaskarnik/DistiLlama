@@ -126,7 +126,6 @@ export async function getDefaultStarterQuestions(selectedParams, vectorStore) {
     return [];
   }
 }
-
 export async function* talkToDocument(selectedParams, vectorStore, input: ConversationalRetrievalQAChainInput) {
   console.log('talkToDocument', selectedParams);
   const llm = new Ollama({

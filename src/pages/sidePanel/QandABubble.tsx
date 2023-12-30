@@ -144,6 +144,7 @@ export function QandABubble({ taskType, selectedParams, vectorstore, starterQues
               {starterQuestions.map((question, index) => (
                 <li
                   key={index}
+                  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
                   role="button"
                   tabIndex={0}
                   onClick={() => {
