@@ -74,9 +74,15 @@ export async function embedDocs(selectedModel, localFile): Promise<EmbedDocsOutp
   const splitDocs = await splitter.splitDocuments(documents);
   await vectorstore.addDocuments(splitDocs);
   console.log('Added documents to vectorstore');
+  const starterQuestions = await getDefaultStarterQuestions(selectedModel, vectorstore);
   return pageContent
-    ? ({ vectorstore, pageURL: pageContent.pageURL, tabID: pageContent.tabID } as EmbedDocsOutput)
-    : ({ vectorstore, fileName: localFile.name } as EmbedDocsOutput);
+    ? ({
+        vectorstore,
+        pageURL: pageContent.pageURL,
+        tabID: pageContent.tabID,
+        starterQuestions: starterQuestions,
+      } as EmbedDocsOutput)
+    : ({ vectorstore, fileName: localFile.name, starterQuestions: starterQuestions } as EmbedDocsOutput);
 }
 
 export async function getDefaultStarterQuestions(selectedParams, vectorStore) {

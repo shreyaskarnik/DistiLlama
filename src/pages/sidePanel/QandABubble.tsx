@@ -1,5 +1,5 @@
 import LinearProgress from '@mui/material/LinearProgress';
-import { talkToDocument, chatWithLLM, getDefaultStarterQuestions } from '@root/src/pages/sidePanel/QandA';
+import { talkToDocument, chatWithLLM } from '@root/src/pages/sidePanel/QandA';
 import { useEffect, useRef, useState } from 'react';
 import { BsFillArrowRightSquareFill } from 'react-icons/bs';
 import PageMetadata from '@root/src/pages/sidePanel/PageMetadata';
@@ -29,7 +29,7 @@ export function AnsweringStatus({ answering }) {
   );
 }
 
-export function QandABubble({ taskType, selectedParams, vectorstore }) {
+export function QandABubble({ taskType, selectedParams, vectorstore, starterQuestions }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
@@ -45,7 +45,6 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
     e.target.style.height = 'auto'; // Reset the height
     e.target.style.height = `${e.target.scrollHeight}px`; // Set the height equal to the scroll height
   };
-  const [starterQuestions, setStarterQuestions] = useState([]);
   const handleKeyPress = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       // Check if Enter was pressed without the shift key
@@ -53,16 +52,8 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
       handleQandAAction(e); // Call your existing form submission handler
     }
   };
-  const fetchStarterQuestions = async () => {
-    console.log('getting default starter questions');
-    if (taskType === 'docs' || taskType === 'qanda') {
-      const defaultStarterQuestions = await getDefaultStarterQuestions(selectedParams, vectorstore.vectorstore);
-      setStarterQuestions(defaultStarterQuestions);
-    }
-  };
 
   useEffect(() => {
-    fetchStarterQuestions();
     setAnswer('');
     setQuestion('');
     setAnswering(false);
@@ -73,7 +64,9 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
   }, [chat_history]);
 
   const handleQandAAction = async e => {
-    e.preventDefault(); // Prevent page reload on form submit
+    if (e) {
+      e.preventDefault(); // Prevent page reload on form submit
+    }
     if (!question) return; // Prevent sending empty questions
 
     console.log('Params used for QandA: ', selectedParams);
@@ -155,10 +148,13 @@ export function QandABubble({ taskType, selectedParams, vectorstore }) {
                   tabIndex={0}
                   onClick={() => {
                     setQuestion(question);
+                    // invoke handleQandAAction
+                    handleQandAAction(null);
                   }}
                   onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       setQuestion(question);
+                      handleQandAAction(null);
                     }
                   }}>
                   {question}

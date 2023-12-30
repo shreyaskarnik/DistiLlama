@@ -24,6 +24,7 @@ const SidePanel = () => {
   const [readyToChat, setReadyToChat] = useState(false);
   const [serverRunning, setServerRunning] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [starterQuestions, setStarterQuestions] = useState([]);
 
   const toggleSettingsVisibility = () => {
     chrome.storage.local.set({ isDefaultSet: false });
@@ -35,6 +36,7 @@ const SidePanel = () => {
     setSelectedOption(null);
     setSelectedPDF(null);
     setLoading(false);
+    setStarterQuestions([]);
   };
   const fetchModels = async () => {
     try {
@@ -58,6 +60,7 @@ const SidePanel = () => {
     setVectorStore(null);
     setReadyToChat(false);
     setSelectedPDF(null);
+    setStarterQuestions([]);
     resetTaskStates();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,6 +81,7 @@ const SidePanel = () => {
     const response = await embedDocs(selectedParams, selectedPDF);
     setVectorStore(response);
     setEmbedding(false);
+    setStarterQuestions(response.starterQuestions);
   };
   return (
     <div className="App">
@@ -151,7 +155,12 @@ const SidePanel = () => {
             </div>
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
+            <QandABubble
+              taskType={selectedOption}
+              selectedParams={selectedParams}
+              vectorstore={vectorstore}
+              starterQuestions={starterQuestions}
+            />
           ) : null}
         </div>
       )}
@@ -166,7 +175,12 @@ const SidePanel = () => {
             />
           )}
           {vectorstore !== null && !embedding ? (
-            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
+            <QandABubble
+              taskType={selectedOption}
+              selectedParams={selectedParams}
+              vectorstore={vectorstore}
+              starterQuestions={starterQuestions}
+            />
           ) : null}
         </div>
       )}
@@ -184,7 +198,12 @@ const SidePanel = () => {
             </div>
           )}
           {readyToChat && (
-            <QandABubble taskType={selectedOption} selectedParams={selectedParams} vectorstore={vectorstore} />
+            <QandABubble
+              taskType={selectedOption}
+              selectedParams={selectedParams}
+              vectorstore={vectorstore}
+              starterQuestions={starterQuestions}
+            />
           )}
         </div>
       )}
