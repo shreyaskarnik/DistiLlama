@@ -37,24 +37,6 @@ To generate the summary I am using the following approach:
     - Click on `Load unpacked` and select the `dist` folder from the base of the cloned project.
     - You should see the DistiLlama added to your Chrome extensions.
     - You may want to pin the extension to your Chrome toolbar for easy access.
-- If you decide to use a different LLM you will need to change this line in `src/pages/sidePanel/Summarize.ts`
-
-    ```typescript
-    const llm = new ChatOllama({
-        baseUrl: 'http://localhost:11435', // change if you are using a different endpoint
-        temperature: 0.3, // change if you want to experiment with different temperatures
-        model: 'mistral', // change if you want to use a different model
-        });
-    ```
-
-- If you would like to tweak the summarization chain change these lines in `src/pages/sidePanel/Summarize.ts`
-
-    ```typescript
-    const chain = loadSummarizationChain(llm, {
-      type: 'map_reduce', // you can choose from map_reduce, stuff or refine
-      verbose: true, // to view the steps in the console
-    });
-    ```
 
 ## Demo
 
@@ -84,7 +66,8 @@ To generate the summary I am using the following approach:
 - [ ] Check out performance with different tuned prompts
 - [x] Extend to chat with the page (use embeddings and LLMs for RAG)
 - [x] Use [transformers.js](https://github.com/xenova/transformers.js) for local in browser embeddings and [Voy](https://github.com/tantaraio/voy) for the storage similar to this [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
-- [ ] Focus on improving quality of the summarization and chat
+- [ ] Focus on improving the quality of the summarization and chat
+- [ ] Multimodal support 
 
 ## References and Inspiration
 
@@ -92,4 +75,4 @@ To generate the summary I am using the following approach:
 - [Ollama](https://ollama.ai/)
 - [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
 - [Chrome Extension Template](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
-- Art work generated using [DALL·E 3](https://openai.com/dall-e-3)
+- Artwork generated using [DALL·E 3](https://openai.com/dall-e-3)
