@@ -25,7 +25,7 @@ dependencies:
     version: 3.1.0
   langchain:
     specifier: ^0.0.209
-    version: 0.0.209(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.14.2)
+    version: 0.0.209(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0)
   moment:
     specifier: ^2.29.4
     version: 2.29.4
@@ -98,8 +98,8 @@ devDependencies:
     specifier: 18.2.18
     version: 18.2.18
   '@types/ws':
-    specifier: ^8.5.8
-    version: 8.5.8
+    specifier: ^8.5.10
+    version: 8.5.10
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.13.0
     version: 6.13.0(@typescript-eslint/parser@6.11.0)(eslint@8.54.0)(typescript@5.3.3)
@@ -188,8 +188,8 @@ devDependencies:
     specifier: ^3.3.0
     version: 3.3.0(vite@5.0.10)
   ws:
-    specifier: 8.14.2
-    version: 8.14.2
+    specifier: 8.16.0
+    version: 8.16.0
 
 packages:
 
@@ -1563,7 +1563,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@langchain/community@0.0.7(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(voy-search@0.6.3)(ws@8.14.2):
+  /@langchain/community@0.0.7(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(voy-search@0.6.3)(ws@8.16.0):
     resolution: {integrity: sha512-4O41IF8Cirqbb/SC7xNecxUIjuHX7HZkOlEgj98Zex+UuBF4aggPawUAJnP7+ak30PfOxH7NymnIWcs4MqRfxg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -1808,7 +1808,7 @@ packages:
       langsmith: 0.0.48
       uuid: 9.0.1
       voy-search: 0.6.3
-      ws: 8.14.2
+      ws: 8.16.0
       zod: 3.22.4
     transitivePeerDependencies:
       - encoding
@@ -2699,8 +2699,8 @@ packages:
     resolution: {integrity: sha512-BT2Krtx4xaO6iwzwMFUYvWBWkV2pr37zD68Vmp1CDV196MzczBRxuEpD6Pr395HAgebC/co7hOphs53r8V7jew==}
     dev: false
 
-  /@types/ws@8.5.8:
-    resolution: {integrity: sha512-flUksGIQCnJd6sZ1l5dqCEG/ksaoAg/eUwiLAGTJQcfgvZJKF++Ta4bJA6A5aPSJmsr+xlseHn4KLgVlNnvPTg==}
+  /@types/ws@8.5.10:
+    resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
     dependencies:
       '@types/node': 20.10.5
     dev: true
@@ -6240,7 +6240,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.14.2
+      ws: 8.16.0
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -6334,7 +6334,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /langchain@0.0.209(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.14.2):
+  /langchain@0.0.209(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0):
     resolution: {integrity: sha512-5+ixk2z6XP7NiPqAinrolwd4LKA4b+gWDiFHGaMnk3AHeOnquUHEEqDXghuQrMpr93p8egwO9AgmpKpAIvznFg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -6494,7 +6494,7 @@ packages:
         optional: true
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
-      '@langchain/community': 0.0.7(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(voy-search@0.6.3)(ws@8.14.2)
+      '@langchain/community': 0.0.7(@mozilla/readability@0.4.4)(@xenova/transformers@2.9.0)(voy-search@0.6.3)(ws@8.16.0)
       '@langchain/core': 0.1.2
       '@langchain/openai': 0.0.6
       binary-extensions: 2.2.0
@@ -6509,7 +6509,7 @@ packages:
       p-retry: 4.6.2
       pdf-parse: 1.1.1
       uuid: 9.0.1
-      ws: 8.14.2
+      ws: 8.16.0
       yaml: 2.3.4
       zod: 3.22.4
       zod-to-json-schema: 3.20.3(zod@3.22.4)
@@ -9310,7 +9310,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.6
       acorn: 8.10.0
       acorn-import-assertions: 1.9.0(acorn@8.10.0)
-      browserslist: 4.22.1
+      browserslist: 4.22.2
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.3.1
@@ -9462,8 +9462,8 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
+  /ws@8.16.0:
+    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
