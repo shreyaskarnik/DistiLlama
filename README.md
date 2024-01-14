@@ -69,7 +69,7 @@ To generate the summary I am using the following approach:
 - [ ] Focus on improving the quality of the summarization and chat
 - [ ] Multimodal support
 
-## References and Inspiration
+## References and Inspiration 
 
 - [LangChain](https://github.com/langchain-ai/langchainjs)
 - [Ollama](https://ollama.ai/)
