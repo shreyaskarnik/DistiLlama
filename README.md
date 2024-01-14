@@ -30,8 +30,8 @@ To generate the summary I am using the following approach:
 
 - Clone this repo
   - Install pnpm `npm install -g pnpm`
-  - run `yarn install`
-  - run `yarn dev`
+  - run `pnpm install`
+  - run `pnpm dev`
   - Open Chrome and navigate to `chrome://extensions/`
     - Enable developer mode (if not already enabled)
     - Click on `Load unpacked` and select the `dist` folder from the base of the cloned project.
@@ -67,7 +67,7 @@ To generate the summary I am using the following approach:
 - [x] Extend to chat with the page (use embeddings and LLMs for RAG)
 - [x] Use [transformers.js](https://github.com/xenova/transformers.js) for local in browser embeddings and [Voy](https://github.com/tantaraio/voy) for the storage similar to this [Building LLM-Powered Web Apps with Client-Side Technology](https://ollama.ai/blog/building-llm-powered-web-apps)
 - [ ] Focus on improving the quality of the summarization and chat
-- [ ] Multimodal support 
+- [ ] Multimodal support
 
 ## References and Inspiration
 
