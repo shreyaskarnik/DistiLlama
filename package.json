@@ -58,7 +58,7 @@
     "@types/react-dom": "18.2.18",
     "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.11.0",
+    "@typescript-eslint/parser": "^6.20.0",
     "@vitejs/plugin-react": "4.2.1",
     "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
