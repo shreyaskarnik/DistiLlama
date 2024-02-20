@@ -18,14 +18,14 @@ dependencies:
     specifier: ^5.15.2
     version: 5.15.2(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.54)(react-dom@18.2.0)(react@18.2.0)
   '@xenova/transformers':
-    specifier: ^2.14.2
-    version: 2.14.2
+    specifier: ^2.15.0
+    version: 2.15.0
   construct-style-sheets-polyfill:
     specifier: ^3.1.0
     version: 3.1.0
   langchain:
     specifier: ^0.0.209
-    version: 0.0.209(@mozilla/readability@0.5.0)(@xenova/transformers@2.14.2)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0)
+    version: 0.0.209(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.0)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0)
   moment:
     specifier: ^2.30.1
     version: 2.30.1
@@ -1562,7 +1562,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@langchain/community@0.0.7(@mozilla/readability@0.5.0)(@xenova/transformers@2.14.2)(voy-search@0.6.3)(ws@8.16.0):
+  /@langchain/community@0.0.7(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.0)(voy-search@0.6.3)(ws@8.16.0):
     resolution: {integrity: sha512-4O41IF8Cirqbb/SC7xNecxUIjuHX7HZkOlEgj98Zex+UuBF4aggPawUAJnP7+ak30PfOxH7NymnIWcs4MqRfxg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -1802,7 +1802,7 @@ packages:
       '@langchain/core': 0.1.2
       '@langchain/openai': 0.0.6
       '@mozilla/readability': 0.5.0
-      '@xenova/transformers': 2.14.2
+      '@xenova/transformers': 2.15.0
       flat: 5.0.2
       langsmith: 0.0.48
       uuid: 9.0.1
@@ -2986,8 +2986,8 @@ packages:
       '@xtuc/long': 4.2.2
     dev: true
 
-  /@xenova/transformers@2.14.2:
-    resolution: {integrity: sha512-R0MBCNgxsQ/LHfX2qQLjNGngPepohkjkyFn4axNe5Ui4L2KC8l/4AmJd4t9w8oeCbqAfZrxXXiFWpF5yXuCTxQ==}
+  /@xenova/transformers@2.15.0:
+    resolution: {integrity: sha512-e8pt+yLGSmwZnQR5Q/fq1NJ6fPr3+WKqxh/jF2PzfXFZ2KZsDdFQeCVlk8AnOADP4Aimlqy+Wp/xuws96/pX9A==}
     dependencies:
       '@huggingface/jinja': 0.1.2
       onnxruntime-web: 1.14.0
@@ -6317,7 +6317,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /langchain@0.0.209(@mozilla/readability@0.5.0)(@xenova/transformers@2.14.2)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0):
+  /langchain@0.0.209(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.0)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0):
     resolution: {integrity: sha512-5+ixk2z6XP7NiPqAinrolwd4LKA4b+gWDiFHGaMnk3AHeOnquUHEEqDXghuQrMpr93p8egwO9AgmpKpAIvznFg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -6477,7 +6477,7 @@ packages:
         optional: true
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
-      '@langchain/community': 0.0.7(@mozilla/readability@0.5.0)(@xenova/transformers@2.14.2)(voy-search@0.6.3)(ws@8.16.0)
+      '@langchain/community': 0.0.7(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.0)(voy-search@0.6.3)(ws@8.16.0)
       '@langchain/core': 0.1.2
       '@langchain/openai': 0.0.6
       binary-extensions: 2.2.0
