@@ -149,8 +149,8 @@ devDependencies:
     specifier: 29.7.0
     version: 29.7.0(@types/node@20.11.19)
   jest-environment-jsdom:
-    specifier: 29.5.0
-    version: 29.5.0
+    specifier: 29.7.0
+    version: 29.7.0
   lint-staged:
     specifier: ^15.2.2
     version: 15.2.2
@@ -2641,12 +2641,6 @@ packages:
     resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
     dev: false
 
-  /@types/node@20.10.7:
-    resolution: {integrity: sha512-fRbIKb8C/Y2lXxB5eVMj4IU7xpdox0Lh8bUPEdtLysaylsml1hOOx1+STloRs/B9nf7C6kPRmmg/V7aQW7usNg==}
-    dependencies:
-      undici-types: 5.26.5
-    dev: true
-
   /@types/node@20.11.19:
     resolution: {integrity: sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==}
     dependencies:
@@ -3014,6 +3008,7 @@ packages:
 
   /abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
+    deprecated: Use your platform's native atob() and btoa() methods instead
     dev: true
 
   /abbrev@1.1.1:
@@ -4172,6 +4167,7 @@ packages:
   /domexception@4.0.0:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
+    deprecated: Use your platform's native DOMException instead
     dependencies:
       webidl-conversions: 7.0.0
     dev: true
@@ -5848,8 +5844,8 @@ packages:
       pretty-format: 29.7.0
     dev: true
 
-  /jest-environment-jsdom@29.5.0:
-    resolution: {integrity: sha512-/KG8yEK4aN8ak56yFVdqFDzKNHgF4BAymCx2LbPNPsUshUlfAl0eX402Xm1pt+eoG9SLZEUVifqXtX8SK74KCw==}
+  /jest-environment-jsdom@29.7.0:
+    resolution: {integrity: sha512-k9iQbsf9OyOfdzWH8HDmrRT0gSIcX+FLNW7IQq94tFX0gynPwqDTW0Ho6iMVNjGz/nb+l/vW3dWM2bbLLpkbXA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       canvas: ^2.5.0
@@ -6120,7 +6116,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.10.7
+      '@types/node': 20.11.19
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
