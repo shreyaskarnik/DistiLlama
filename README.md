@@ -26,7 +26,7 @@ To generate the summary I am using the following approach:
   - Start Ollama using the following command: `OLLAMA_ORIGINS=* OLLAMA_HOST=127.0.0.1:11435 ollama serve`
   - In another terminal you can run `ollama pull llama2:latest` or `ollama pull mistral:latest`
   - Choice of model depends on your use case. Here are the models supported by Ollama <https://ollama.ai/library>
-  - `OLLAMA_ORIGINS=*` is important as it will not block traffic from the extension.
+  - Make sure you set OLLAMA_ORIGINS=* for the Ollama environment by following instructions [here](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server)
 
 - Clone this repo
   - Install pnpm `npm install -g pnpm`
