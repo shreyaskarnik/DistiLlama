@@ -1,3 +1,4 @@
+import { OLLAMA_BASE_URL } from '@src/pages/utils/constants';
 import { getPageContent } from '@src/pages/utils/getPageContent';
 import { ConversationChain } from 'langchain/chains';
 import { ChatOllama } from 'langchain/chat_models/ollama';
@@ -20,7 +21,6 @@ import { Voy as VoyClient } from 'voy-search';
 import * as pdfWorker from '../../../node_modules/pdfjs-dist/build/pdf.worker.mjs';
 PDFLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
-export const OLLAMA_BASE_URL = 'http://localhost:11435';
 export type ConversationalRetrievalQAChainInput = {
   question: string;
   chat_history: { question: string; answer: string }[];

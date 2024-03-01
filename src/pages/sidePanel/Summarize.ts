@@ -2,7 +2,7 @@ import { getPageContent } from '@src/pages/utils/getPageContent';
 import { loadSummarizationChain } from 'langchain/chains';
 import { ChatOllama } from 'langchain/chat_models/ollama';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { OLLAMA_BASE_URL } from '@src/pages/sidePanel/QandA';
+import { OLLAMA_BASE_URL } from '@src/pages/utils/constants';
 
 export type SummarizationResponse = {
   title?: string;
