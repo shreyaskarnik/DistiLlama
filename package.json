@@ -24,7 +24,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@emotion/react": "^11.11.3",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mozilla/readability": "^0.5.0",
     "@mui/material": "^5.15.2",
@@ -53,7 +53,7 @@
     "@twind/preset-tailwind": "^1.1.4",
     "@types/chrome": "0.0.260",
     "@types/jest": "29.5.12",
-    "@types/node": "20.11.20",
+    "@types/node": "20.11.24",
     "@types/react": "18.2.54",
     "@types/react-dom": "18.2.18",
     "@types/ws": "^8.5.10",
