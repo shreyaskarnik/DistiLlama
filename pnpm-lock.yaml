@@ -24,8 +24,8 @@ dependencies:
     specifier: ^3.1.0
     version: 3.1.0
   langchain:
-    specifier: ^0.1.23
-    version: 0.1.23(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0)
+    specifier: ^0.1.28
+    version: 0.1.28(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0)
   moment:
     specifier: ^2.30.1
     version: 2.30.1
@@ -1568,8 +1568,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@langchain/community@0.0.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(voy-search@0.6.3)(ws@8.16.0):
-    resolution: {integrity: sha512-m7KfOB2t/6ZQkx29FcqHeOe+jxQZDJdRqpMsCAxRebCaIUiAwNJgRqqukQOcDsG574jhEyEMYuYDfImfXSY7aw==}
+  /@langchain/community@0.0.40(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(voy-search@0.6.3)(ws@8.16.0):
+    resolution: {integrity: sha512-a+uZ1+FyZ2tLBybAf1bPc+gm/8OgYLU+Z7h/r41ThRTHbMlnT7hiC8LFHX/zsm9H7mZ/dbpRSBuz/MFxS/TlBA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@aws-crypto/sha256-js': ^5.0.0
@@ -1625,6 +1625,7 @@ packages:
       closevector-web: 0.1.6
       cohere-ai: '*'
       convex: ^1.3.1
+      couchbase: ^4.3.0
       discord.js: ^14.14.1
       dria: ^0.0.3
       faiss-node: ^0.5.1
@@ -1635,6 +1636,7 @@ packages:
       html-to-text: ^9.0.5
       ioredis: ^5.3.2
       jsdom: '*'
+      jsonwebtoken: ^9.0.2
       llmonitor: ^0.5.9
       lodash: ^4.17.21
       lunary: ^0.6.11
@@ -1763,6 +1765,8 @@ packages:
         optional: true
       convex:
         optional: true
+      couchbase:
+        optional: true
       discord.js:
         optional: true
       dria:
@@ -1782,6 +1786,8 @@ packages:
       ioredis:
         optional: true
       jsdom:
+        optional: true
+      jsonwebtoken:
         optional: true
       llmonitor:
         optional: true
@@ -1826,8 +1832,8 @@ packages:
       ws:
         optional: true
     dependencies:
-      '@langchain/core': 0.1.39
-      '@langchain/openai': 0.0.15
+      '@langchain/core': 0.1.48
+      '@langchain/openai': 0.0.21
       '@mozilla/readability': 0.5.0
       '@xenova/transformers': 2.15.1
       flat: 5.0.2
@@ -1840,8 +1846,8 @@ packages:
       - encoding
     dev: false
 
-  /@langchain/core@0.1.39:
-    resolution: {integrity: sha512-bhsMOSLPkWbVZuE3uPd9dgiOeqFwexU7IGfjWht+mWrAW9spuBtAOKOcrmxK3v5TYaKpoDbIiH641FobyD947g==}
+  /@langchain/core@0.1.48:
+    resolution: {integrity: sha512-kGggyDbaYzCIPGkzvMvm/v0+lcTy1jlX6QZ7PSzUQFYJg5JK399x3AOYIDkbbUVxBAyHRgrWlxVQXH0FW3N6Bg==}
     engines: {node: '>=18'}
     dependencies:
       ansi-styles: 5.2.0
@@ -1857,11 +1863,11 @@ packages:
       zod-to-json-schema: 3.22.4(zod@3.22.4)
     dev: false
 
-  /@langchain/openai@0.0.15:
-    resolution: {integrity: sha512-ILecml9YopmQxfpaquYEG+KfEz7svJqpcla671J1tVngqtPwRqg9PLUOa2eDrPsunScxKUeLd8HjAGLd/eaefQ==}
+  /@langchain/openai@0.0.21:
+    resolution: {integrity: sha512-p3BmYmPhoOxSWxuuvjw0vtzJMCfnGnp+cBK9huIcu2ds7DX8OsVNgPhFf7xPodl5fzz142pfjOHQkemqFBo6MA==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.39
+      '@langchain/core': 0.1.48
       js-tiktoken: 1.0.8
       openai: 4.28.0
       zod: 3.22.4
@@ -6581,8 +6587,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /langchain@0.1.23(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0):
-    resolution: {integrity: sha512-IzvF0c+mi+6kqrC0akWOQnJ0ynwkuh4qhg5bpgr56mlQItaJimO87ujktgxrOb1xMVU7fF9Y52SNc2Kjg7ihJw==}
+  /langchain@0.1.28(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0):
+    resolution: {integrity: sha512-LNuILtOSFptfOqDwUwQAl7B0dYrBtxzVZ6lDhc5DA8rk+pyTCy12HQO7t8bGqC8oQlEPYPKaom8VRlvfupUBTw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@aws-sdk/client-s3': ^3.310.0
@@ -6610,7 +6616,7 @@ packages:
       d3-dsv: ^2.0.0
       epub2: ^3.0.1
       faiss-node: '*'
-      fast-xml-parser: ^4.2.7
+      fast-xml-parser: '*'
       google-auth-library: ^8.9.0
       handlebars: ^4.7.8
       html-to-text: ^9.0.5
@@ -6635,7 +6641,7 @@ packages:
       web-auth-library: ^1.0.3
       ws: ^8.14.2
       youtube-transcript: ^1.0.6
-      youtubei.js: ^5.8.0
+      youtubei.js: ^9.1.0
     peerDependenciesMeta:
       '@aws-sdk/client-s3':
         optional: true
@@ -6741,9 +6747,9 @@ packages:
         optional: true
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
-      '@langchain/community': 0.0.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(voy-search@0.6.3)(ws@8.16.0)
-      '@langchain/core': 0.1.39
-      '@langchain/openai': 0.0.15
+      '@langchain/community': 0.0.40(@mozilla/readability@0.5.0)(@xenova/transformers@2.15.1)(voy-search@0.6.3)(ws@8.16.0)
+      '@langchain/core': 0.1.48
+      '@langchain/openai': 0.0.21
       binary-extensions: 2.2.0
       expr-eval: 2.0.2
       js-tiktoken: 1.0.8
@@ -6808,6 +6814,7 @@ packages:
       - firebase-admin
       - googleapis
       - hnswlib-node
+      - jsonwebtoken
       - llmonitor
       - lodash
       - lunary
