@@ -27,7 +27,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mozilla/readability": "^0.5.0",
-    "@mui/material": "^5.15.12",
+    "@mui/material": "^5.15.14",
     "@xenova/transformers": "^2.15.1",
     "construct-style-sheets-polyfill": "^3.1.0",
     "langchain": "^0.1.28",
