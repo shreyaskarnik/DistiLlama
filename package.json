@@ -25,7 +25,7 @@
   "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/styled": "^11.11.5",
     "@mozilla/readability": "^0.5.0",
     "@mui/material": "^5.15.14",
     "@xenova/transformers": "^2.16.1",
