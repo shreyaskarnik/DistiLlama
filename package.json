@@ -83,7 +83,7 @@
     "ts-loader": "9.5.1",
     "tslib": "^2.6.2",
     "typescript": "5.4.4",
-    "vite": "5.2.8",
+    "vite": "5.2.10",
     "vite-plugin-top-level-await": "^1.4.1",
     "vite-plugin-wasm": "^3.3.0",
     "ws": "8.16.0"
