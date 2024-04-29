@@ -25,7 +25,7 @@ dependencies:
     version: 3.1.0
   langchain:
     specifier: ^0.1.33
-    version: 0.1.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0)
+    version: 0.1.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.17.0)
   moment:
     specifier: ^2.30.1
     version: 2.30.1
@@ -188,8 +188,8 @@ devDependencies:
     specifier: ^3.3.0
     version: 3.3.0(vite@5.2.8)
   ws:
-    specifier: 8.16.0
-    version: 8.16.0
+    specifier: 8.17.0
+    version: 8.17.0
 
 packages:
 
@@ -1584,7 +1584,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@langchain/community@0.0.48(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(voy-search@0.6.3)(ws@8.16.0):
+  /@langchain/community@0.0.48(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(voy-search@0.6.3)(ws@8.17.0):
     resolution: {integrity: sha512-jG7dpJkgKtwbrSLsxW4mXmECopTj5tRt4+B+QcKCqZm7yEghFR44Xj5OkDWtzzsjpL47RJck5AJ8MsQnmi7WDQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -1872,7 +1872,7 @@ packages:
       langsmith: 0.1.7
       uuid: 9.0.1
       voy-search: 0.6.3
-      ws: 8.16.0
+      ws: 8.17.0
       zod: 3.22.4
       zod-to-json-schema: 3.22.5(zod@3.22.4)
     transitivePeerDependencies:
@@ -6359,7 +6359,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.16.0
+      ws: 8.17.0
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -6448,7 +6448,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /langchain@0.1.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.16.0):
+  /langchain@0.1.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.17.0):
     resolution: {integrity: sha512-IrRd839x8eAmDutHNDMHGzIjufyWt/ckJrnRB2WifIJmtLWNRNQo5jZd7toeBU0UOVOQxoPtQGYf8lR0ar7vIQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -6608,7 +6608,7 @@ packages:
         optional: true
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
-      '@langchain/community': 0.0.48(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(voy-search@0.6.3)(ws@8.16.0)
+      '@langchain/community': 0.0.48(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(voy-search@0.6.3)(ws@8.17.0)
       '@langchain/core': 0.1.57
       '@langchain/openai': 0.0.28
       binary-extensions: 2.2.0
@@ -6622,7 +6622,7 @@ packages:
       p-retry: 4.6.2
       pdf-parse: 1.1.1
       uuid: 9.0.1
-      ws: 8.16.0
+      ws: 8.17.0
       yaml: 2.3.4
       zod: 3.22.4
       zod-to-json-schema: 3.22.4(zod@3.22.4)
@@ -9544,8 +9544,8 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /ws@8.16.0:
-    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
+  /ws@8.17.0:
+    resolution: {integrity: sha512-uJq6108EgZMAl20KagGkzCKfMEjxmKvZHG7Tlq0Z6nOky7YF7aq4mOx6xK8TJ/i1LeK4Qus7INktacctDgY8Ow==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
