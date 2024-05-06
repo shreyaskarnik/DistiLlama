@@ -24,8 +24,8 @@ dependencies:
     specifier: ^3.1.0
     version: 3.1.0
   langchain:
-    specifier: ^0.1.33
-    version: 0.1.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.17.0)
+    specifier: ^0.1.36
+    version: 0.1.36(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.17.0)
   moment:
     specifier: ^2.30.1
     version: 2.30.1
@@ -1863,7 +1863,7 @@ packages:
       ws:
         optional: true
     dependencies:
-      '@langchain/core': 0.1.57
+      '@langchain/core': 0.1.62
       '@langchain/openai': 0.0.28
       '@mozilla/readability': 0.5.0
       '@xenova/transformers': 2.16.1
@@ -1879,8 +1879,8 @@ packages:
       - encoding
     dev: false
 
-  /@langchain/core@0.1.57:
-    resolution: {integrity: sha512-6wOwidPkkRcANrOKl88+YYpm3jHfpg6W8EqZHQCImSAlxdEhyDSq2eeQKHOPCFCrfNWkClaNn+Wlzzz4Qwf9Tg==}
+  /@langchain/core@0.1.62:
+    resolution: {integrity: sha512-PsBM/x0wxVvVPawKak2MFjxEneogipf212yO+rLf+2M3RDepCpYCdn1NBWgfmC+AWpmBYx/8zM7Y4QW7Kg2Wjw==}
     engines: {node: '>=18'}
     dependencies:
       ansi-styles: 5.2.0
@@ -1889,24 +1889,33 @@ packages:
       js-tiktoken: 1.0.8
       langsmith: 0.1.7
       ml-distance: 4.0.1
+      mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 9.0.1
       zod: 3.22.4
-      zod-to-json-schema: 3.22.4(zod@3.22.4)
+      zod-to-json-schema: 3.22.5(zod@3.22.4)
     dev: false
 
   /@langchain/openai@0.0.28:
     resolution: {integrity: sha512-2s1RA3/eAnz4ahdzsMPBna9hfAqpFNlWdHiPxVGZ5yrhXsbLWWoPcF+22LCk9t0HJKtazi2GCIWc0HVXH9Abig==}
     engines: {node: '>=18'}
     dependencies:
-      '@langchain/core': 0.1.57
+      '@langchain/core': 0.1.62
       js-tiktoken: 1.0.8
       openai: 4.34.0
       zod: 3.22.4
-      zod-to-json-schema: 3.22.4(zod@3.22.4)
+      zod-to-json-schema: 3.22.5(zod@3.22.4)
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /@langchain/textsplitters@0.0.0:
+    resolution: {integrity: sha512-3hPesWomnmVeYMppEGYbyv0v/sRUugUdlFBNn9m1ueJYHAIKbvCErkWxNUH3guyKKYgJVrkvZoQxcd9faucSaw==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@langchain/core': 0.1.62
+      js-tiktoken: 1.0.11
     dev: false
 
   /@mapbox/node-pre-gyp@1.0.11:
@@ -6276,6 +6285,12 @@ packages:
     hasBin: true
     dev: true
 
+  /js-tiktoken@1.0.11:
+    resolution: {integrity: sha512-PajXFLq2vx7/8jllQZ43vzNpAai/0MOVdJjW/UrNyJorNQRTjHrqdGJG/mjHVy7h9M6dW6CaG43eNLMYFkTh6w==}
+    dependencies:
+      base64-js: 1.5.1
+    dev: false
+
   /js-tiktoken@1.0.8:
     resolution: {integrity: sha512-r7XK3E9/I+SOrbAGqb39pyO/rHAS1diAOSRAvaaLfHgXjkUSK9AiSd+r84Vn2f/GvXJYRAxKj8NHrUvqlaH5qg==}
     dependencies:
@@ -6421,8 +6436,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /langchain@0.1.33(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.17.0):
-    resolution: {integrity: sha512-IrRd839x8eAmDutHNDMHGzIjufyWt/ckJrnRB2WifIJmtLWNRNQo5jZd7toeBU0UOVOQxoPtQGYf8lR0ar7vIQ==}
+  /langchain@0.1.36(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(pdf-parse@1.1.1)(voy-search@0.6.3)(ws@8.17.0):
+    resolution: {integrity: sha512-NTbnCL/jKWIeEI//Nm1oG8nhW3vkYWvEMr1MPotmTThTfeKfO87eV/OAzAyh6Ruy6GFs/qofRgQZGIe6XvXTNQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@aws-sdk/client-s3': ^3.310.0
@@ -6435,6 +6450,7 @@ packages:
       '@gomomento/sdk-web': ^1.51.1
       '@google-ai/generativelanguage': ^0.2.1
       '@google-cloud/storage': ^6.10.1 || ^7.7.0
+      '@mendable/firecrawl-js': ^0.0.13
       '@notionhq/client': ^2.2.10
       '@pinecone-database/pinecone': '*'
       '@supabase/supabase-js': ^2.10.0
@@ -6496,6 +6512,8 @@ packages:
       '@google-ai/generativelanguage':
         optional: true
       '@google-cloud/storage':
+        optional: true
+      '@mendable/firecrawl-js':
         optional: true
       '@notionhq/client':
         optional: true
@@ -6582,8 +6600,9 @@ packages:
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
       '@langchain/community': 0.0.48(@mozilla/readability@0.5.0)(@xenova/transformers@2.16.1)(voy-search@0.6.3)(ws@8.17.0)
-      '@langchain/core': 0.1.57
+      '@langchain/core': 0.1.62
       '@langchain/openai': 0.0.28
+      '@langchain/textsplitters': 0.0.0
       binary-extensions: 2.2.0
       js-tiktoken: 1.0.8
       js-yaml: 4.1.0
@@ -6598,7 +6617,7 @@ packages:
       ws: 8.17.0
       yaml: 2.3.4
       zod: 3.22.4
-      zod-to-json-schema: 3.22.4(zod@3.22.4)
+      zod-to-json-schema: 3.22.5(zod@3.22.4)
     transitivePeerDependencies:
       - '@aws-crypto/sha256-js'
       - '@aws-sdk/client-bedrock-agent-runtime'
@@ -7260,6 +7279,11 @@ packages:
 
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
+
+  /mustache@4.2.0:
+    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+    hasBin: true
+    dev: false
 
   /nan@2.18.0:
     resolution: {integrity: sha512-W7tfG7vMOGtD30sHoZSSc/JVYiyDPEyQVso/Zz+/uQd0B0L46gtC+pHha5FFMRpil6fm/AoEcRWyOVi4+E/f8w==}
@@ -9575,14 +9599,6 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
-
-  /zod-to-json-schema@3.22.4(zod@3.22.4):
-    resolution: {integrity: sha512-2Ed5dJ+n/O3cU383xSY28cuVi0BCQhF8nYqWU5paEpl7fVdqdAmiLdqLyfblbNdfOFwFfi/mqU4O1pwc60iBhQ==}
-    peerDependencies:
-      zod: ^3.22.4
-    dependencies:
-      zod: 3.22.4
-    dev: false
 
   /zod-to-json-schema@3.22.5(zod@3.22.4):
     resolution: {integrity: sha512-+akaPo6a0zpVCCseDed504KBJUQpEW5QZw7RMneNmKw+fGaML1Z9tUNLnHHAC8x6dzVRO1eB2oEMyZRnuBZg7Q==}
