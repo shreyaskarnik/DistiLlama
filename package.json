@@ -78,7 +78,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
     "rollup": "4.17.2",
-    "sass": "1.71.1",
+    "sass": "1.77.1",
     "ts-jest": "29.1.2",
     "ts-loader": "9.5.1",
     "tslib": "^2.6.2",
