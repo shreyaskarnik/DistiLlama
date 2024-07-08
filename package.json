@@ -79,7 +79,7 @@
     "prettier": "^3.2.5",
     "rollup": "4.18.0",
     "sass": "1.77.1",
-    "ts-jest": "29.1.4",
+    "ts-jest": "29.2.0",
     "ts-loader": "9.5.1",
     "tslib": "^2.6.2",
     "typescript": "5.4.5",
