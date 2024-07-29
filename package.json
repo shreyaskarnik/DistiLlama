@@ -33,7 +33,7 @@
     "langchain": "^0.1.36",
     "moment": "^2.30.1",
     "pdf-parse": "^1.1.1",
-    "pdfjs-dist": "4.0.379",
+    "pdfjs-dist": "4.5.136",
     "prop-types": "^15.8.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
